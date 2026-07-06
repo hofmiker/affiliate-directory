@@ -275,27 +275,36 @@
   .aside {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
   }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px 14px;
+  .commission {
+    background: color-mix(in srgb, var(--accent) 12%, var(--card-bg));
+    border: 1px solid color-mix(in srgb, var(--accent) 32%, var(--border));
+    border-radius: 8px;
+    padding: 10px 12px;
   }
-  .stat .label {
+  .commission .label {
     display: block;
     font-size: 0.72rem;
-    color: var(--muted);
-    margin-bottom: 2px;
-  }
-  .stat .value {
-    display: block;
-    font-size: 0.86rem;
+    color: var(--accent);
     font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .commission .value {
+    display: block;
+    font-size: 1.02rem;
+    font-weight: 700;
     font-variant-numeric: tabular-nums;
     color: var(--fg);
     line-height: 1.3;
   }
+  .cookie {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .cookie .label { font-weight: 600; margin-right: 4px; }
 
   .cta {
     display: block;
@@ -439,16 +448,11 @@
           </div>
         </div>
         <div class="aside">
-          <div class="stats-grid">
-            <div class="stat">
-              <span class="label">Provision</span>
-              <span class="value">${p.commission}</span>
-            </div>
-            <div class="stat">
-              <span class="label">Cookie</span>
-              <span class="value">${p.cookie}</span>
-            </div>
+          <div class="commission">
+            <span class="label">Provision</span>
+            <span class="value">${p.commission}</span>
           </div>
+          <p class="cookie"><span class="label">Cookie</span>${p.cookie}</p>
           <a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Zum Programm →</a>
         </div>
       </div>`;
