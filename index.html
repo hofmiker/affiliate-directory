@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partnerprogramme Verzeichnis</title>
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --fg: #1f2420;
+    --muted: #6b6f64;
+    --border: #dcd5c6;
+    --card-bg: #fffdf8;
+    --accent: #2f5233;
+    --accent-fg: #f5f3ee;
+    --chip-bg: #ece7d9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141713;
+      --fg: #ecebe4;
+      --muted: #999c8e;
+      --border: #2b2f27;
+      --card-bg: #1b1e19;
+      --accent: #7ab97e;
+      --accent-fg: #10140f;
+      --chip-bg: #21241d;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f5f3ee; --fg: #1f2420; --muted: #6b6f64; --border: #dcd5c6;
+    --card-bg: #fffdf8; --accent: #2f5233; --accent-fg: #f5f3ee; --chip-bg: #ece7d9;
+  }
+  :root[data-theme="dark"] {
+    --bg: #141713; --fg: #ecebe4; --muted: #999c8e; --border: #2b2f27;
+    --card-bg: #1b1e19; --accent: #7ab97e; --accent-fg: #10140f; --chip-bg: #21241d;
+  }
+
+  * { box-sizing: border-box; }
+
+  :root {
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
+  }
+
+  html { background: var(--bg); }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.5;
+  }
+
+  a { color: inherit; }
+
+  .page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  header.masthead {
+    padding: 52px 0 22px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  header.masthead::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -5px;
+    height: 1px;
+    background: var(--border);
+  }
+  header.masthead .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  header.masthead h1 {
+    font-family: var(--font-display);
+    font-size: 2.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+  header.masthead p.sub {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.94rem;
+  }
+
+  .controls {
+    padding: 22px 0 0;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 5;
+  }
+  .search-wrap { margin-bottom: 16px; }
+  #search {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    font-family: var(--font-body);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--card-bg);
+    color: var(--fg);
+    outline: none;
+  }
+  #search::placeholder { color: var(--muted); }
+  #search:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab {
+    appearance: none;
+    border: none;
+    background: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0 0 10px;
+    margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+  .tab:hover { color: var(--fg); }
+  .tab.active {
+    color: var(--fg);
+    border-bottom-color: var(--accent);
+  }
+  .tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  main { padding: 22px 0 44px; }
+
+  #count {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 16px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .card {
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    border-radius: 4px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 52px 1fr 152px;
+    gap: 20px;
+    align-items: start;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; }
+  }
+  .card:hover {
+    border-color: var(--muted);
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
+  }
+
+  .stamp {
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    transform: rotate(-3deg);
+    flex-shrink: 0;
+  }
+
+  .info .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 5px;
+  }
+  .info h2 {
+    font-family: var(--font-display);
+    font-size: 1.18rem;
+    font-weight: 600;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  .info .desc {
+    color: var(--muted);
+    font-size: 0.89rem;
+    margin: 0;
+    max-width: 46ch;
+  }
+
+  .stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .stat { text-align: right; }
+  .stat .label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  .stat .value {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid var(--fg);
+    border-radius: 4px;
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+    white-space: nowrap;
+  }
+  .cta:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+  .cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 60px 20px;
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  footer {
+    padding: 20px 0 56px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.76rem;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .card { grid-template-columns: 44px 1fr; }
+    .stamp { width: 44px; height: 44px; }
+    .stats {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .stat { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header class="masthead">
+    <p class="eyebrow">Registriert &amp; kuratiert</p>
+    <h1>Partnerprogramme Verzeichnis</h1>
+    <p class="sub">Deutsche Affiliate-Netzwerke und Partnerprogramme im Überblick — Stand Juli 2026</p>
+  </header>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <input id="search" type="text" placeholder="Suche nach Name, Kategorie oder Stichwort…" autocomplete="off">
+    </div>
+    <div class="tabs" id="tabs"></div>
+  </div>
+
+  <main>
+    <p id="count"></p>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty">Keine Treffer für diese Suche.</div>
+  </main>
+
+  <footer>
+    Angaben zu Provisionen und Cookie-Laufzeiten sind Richtwerte auf Basis öffentlich verfügbarer Informationen und können sich ändern – Details bitte auf der jeweiligen Partnerseite prüfen.
+  </footer>
+</div>
+
+<script>
+  const programs = [
+    { name: "Awin", category: "Netzwerk", desc: "Weltweit größtes Affiliate-Netzwerk mit über 25.000 Programmen, u. a. Otto, MediaMarkt, Puma.", commission: "je Programm unterschiedlich", cookie: "30–90 Tage", url: "https://www.awin.com/de" },
+    { name: "Digistore24", category: "Netzwerk", desc: "Deutschsprachiges Netzwerk für digitale Produkte wie Online-Kurse, E-Books und Software-Abos.", commission: "20–70 %", cookie: "je Produkt unterschiedlich", url: "https://www.digistore24.com/de/" },
+    { name: "Belboon", category: "Netzwerk", desc: "Berliner Affiliate-Netzwerk mit über 1.800 Programmen, Schwerpunkt Einzelhandel, Reisen, Finanzen.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.belboon.com/de/" },
+    { name: "Tradedoubler", category: "Netzwerk", desc: "International tätiges Netzwerk mit über 3.000 Partnerprogrammen und 180.000 aktiven Publishern.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.tradedoubler.com/de/" },
+    { name: "ADCELL", category: "Netzwerk", desc: "Berliner Netzwerk (seit 2003), rein performancebasiert, über 63.000 aktive Publisher.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.adcell.de/" },
+    { name: "SuperClix", category: "Netzwerk", desc: "Netzwerk aus Freiburg (seit 2000) mit über 500 exklusiven Partnerprogrammen.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.superclix.de/" },
+    { name: "financeAds", category: "Netzwerk", desc: "Spezialisiertes Netzwerk für Banken, Versicherungen und FinTechs.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.financeads.net/" },
+    { name: "Webgains", category: "Netzwerk", desc: "Internationales Netzwerk (seit 2004) mit über 1.850 angeschlossenen Advertisern.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.webgains.com/de/" },
+    { name: "CJ Affiliate", category: "Netzwerk", desc: "Großes internationales Affiliate-Netzwerk mit zahlreichen bekannten Marken.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.cj.com/de" },
+    { name: "CHECK24", category: "Shopping & Vergleich", desc: "Vergleichsportal-Partnerprogramm für Strom, Gas, DSL, Reisen und Versicherungen.", commission: "bis 72,50 € pro Abschluss", cookie: "programmabhängig", url: "https://www.check24-partnerprogramm.de/" },
+    { name: "Amazon PartnerNet", category: "Shopping & Vergleich", desc: "Provision auf Produktverkäufe im Amazon-Shop, Sätze variieren stark nach Kategorie.", commission: "1–20 % je Kategorie", cookie: "24 Std. (bis 90 Tage bei Warenkorb)", url: "https://partnernet.amazon.de/" },
+    { name: "IONOS", category: "Hosting & Software", desc: "Partnerprogramm für Hosting, Domains und Website-Baukasten.", commission: "bis 100 € pro Lead", cookie: "30 Tage", url: "https://www.ionos.com/agency-partner/affiliate" },
+    { name: "Hostinger", category: "Hosting & Software", desc: "Hosting-Anbieter mit hoher Provisionsspanne und kostenlosem Einstieg.", commission: "bis 60 %", cookie: "programmabhängig", url: "https://www.hostinger.com/affiliates" },
+    { name: "Wix", category: "Hosting & Software", desc: "Baukasten-Anbieter, Provision pro verkauftem Premium-Abo.", commission: "bis 100 $ pro Sale", cookie: "30 Tage", url: "https://www.wix.com/about/affiliates" },
+    { name: "Brevo", category: "Hosting & Software", desc: "E-Mail-Marketing-Software (ehemals Sendinblue), Fixprovision pro Neukunde.", commission: "Fixprovision pro Abschluss", cookie: "90 Tage", url: "https://www.brevo.com/partners/affiliates/" },
+    { name: "Canva", category: "Hosting & Software", desc: "Design-Tool mit Affiliate-Programm für Content Creator.", commission: "bis 36 $ pro Pro-Abo", cookie: "programmabhängig", url: "https://www.canva.com/help/canva-affiliate-marketing-program/" },
+    { name: "Teachable", category: "Bildung & Kurse", desc: "Plattform für Online-Kurse mit wiederkehrender Provision pro Abo.", commission: "30 % wiederkehrend", cookie: "30–90 Tage", url: "https://teachable.com/partners" }
+  ];
+
+  const grid = document.getElementById("grid");
+  const tabsEl = document.getElementById("tabs");
+  const searchEl = document.getElementById("search");
+  const countEl = document.getElementById("count");
+  const emptyEl = document.getElementById("empty");
+
+  const categories = ["Alle", ...Array.from(new Set(programs.map(p => p.category)))];
+  let activeCategory = "Alle";
+
+  function renderTabs() {
+    tabsEl.innerHTML = "";
+    categories.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.className = "tab" + (cat === activeCategory ? " active" : "");
+      btn.textContent = cat;
+      btn.addEventListener("click", () => {
+        activeCategory = cat;
+        renderTabs();
+        renderGrid();
+      });
+      tabsEl.appendChild(btn);
+    });
+  }
+
+  function cardHtml(p) {
+    const initials = p.name.slice(0, 2).toUpperCase();
+    return `
+      <div class="card">
+        <div class="stamp">${initials}</div>
+        <div class="info">
+          <p class="eyebrow">${p.category}</p>
+          <h2>${p.name}</h2>
+          <p class="desc">${p.desc}</p>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <span class="label">Provision</span>
+            <span class="value">${p.commission}</span>
+          </div>
+          <div class="stat">
+            <span class="label">Cookie</span>
+            <span class="value">${p.cookie}</span>
+          </div>
+          <a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Zum Programm →</a>
+        </div>
+      </div>`;
+  }
+
+  function renderGrid() {
+    const q = searchEl.value.trim().toLowerCase();
+    const filtered = programs.filter(p => {
+      const matchesCategory = activeCategory === "Alle" || p.category === activeCategory;
+      const haystack = (p.name + " " + p.category + " " + p.desc).toLowerCase();
+      const matchesSearch = q === "" || haystack.includes(q);
+      return matchesCategory && matchesSearch;
+    });
+
+    grid.innerHTML = filtered.map(cardHtml).join("");
+    countEl.textContent = `${filtered.length} von ${programs.length} Programmen`;
+    emptyEl.style.display = filtered.length === 0 ? "block" : "none";
+  }
+
+  searchEl.addEventListener("input", renderGrid);
+
+  renderTabs();
+  renderGrid();
+</script>
+</body>
+</html>
