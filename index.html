@@ -14,6 +14,10 @@
     --accent: #2f5233;
     --accent-fg: #f5f3ee;
     --chip-bg: #ece7d9;
+    --card-shadow: 0 1px 2px rgba(31, 36, 32, 0.04), 0 10px 26px -12px rgba(31, 36, 32, 0.18);
+    --card-shadow-hover: 0 2px 4px rgba(31, 36, 32, 0.06), 0 16px 34px -12px rgba(31, 36, 32, 0.24);
+    --inset-shadow: inset 0 1px 2px rgba(31, 36, 32, 0.06);
+    --stamp-shine: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -6px 10px rgba(31, 36, 32, 0.05);
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -25,15 +29,27 @@
       --accent: #7ab97e;
       --accent-fg: #10140f;
       --chip-bg: #21241d;
+      --card-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 12px 28px -10px rgba(0, 0, 0, 0.6);
+      --card-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 36px -10px rgba(0, 0, 0, 0.7);
+      --inset-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
+      --stamp-shine: inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 -6px 10px rgba(0, 0, 0, 0.3);
     }
   }
   :root[data-theme="light"] {
     --bg: #f5f3ee; --fg: #1f2420; --muted: #6b6f64; --border: #dcd5c6;
     --card-bg: #fffdf8; --accent: #2f5233; --accent-fg: #f5f3ee; --chip-bg: #ece7d9;
+    --card-shadow: 0 1px 2px rgba(31, 36, 32, 0.04), 0 10px 26px -12px rgba(31, 36, 32, 0.18);
+    --card-shadow-hover: 0 2px 4px rgba(31, 36, 32, 0.06), 0 16px 34px -12px rgba(31, 36, 32, 0.24);
+    --inset-shadow: inset 0 1px 2px rgba(31, 36, 32, 0.06);
+    --stamp-shine: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -6px 10px rgba(31, 36, 32, 0.05);
   }
   :root[data-theme="dark"] {
     --bg: #141713; --fg: #ecebe4; --muted: #999c8e; --border: #2b2f27;
     --card-bg: #1b1e19; --accent: #7ab97e; --accent-fg: #10140f; --chip-bg: #21241d;
+    --card-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 12px 28px -10px rgba(0, 0, 0, 0.6);
+    --card-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 36px -10px rgba(0, 0, 0, 0.7);
+    --inset-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
+    --stamp-shine: inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 -6px 10px rgba(0, 0, 0, 0.3);
   }
 
   * { box-sizing: border-box; }
@@ -41,7 +57,6 @@
   :root {
     --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
     --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
   }
 
   html { background: var(--bg); }
@@ -49,7 +64,10 @@
   body {
     margin: 0;
     font-family: var(--font-body);
-    background: var(--bg);
+    background:
+      radial-gradient(900px 420px at 50% -8%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 65%),
+      var(--bg);
+    background-attachment: fixed;
     color: var(--fg);
     line-height: 1.5;
   }
@@ -66,21 +84,12 @@
     padding: 52px 0 22px;
     text-align: center;
     border-bottom: 1px solid var(--border);
-    position: relative;
-  }
-  header.masthead::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: -5px;
-    height: 1px;
-    background: var(--border);
   }
   header.masthead .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
     color: var(--accent);
+    font-weight: 600;
     margin: 0 0 14px;
   }
   header.masthead h1 {
@@ -101,7 +110,9 @@
     padding: 22px 0 0;
     position: sticky;
     top: 0;
-    background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 5;
   }
   .search-wrap { margin-bottom: 16px; }
@@ -111,32 +122,38 @@
     font-size: 0.95rem;
     font-family: var(--font-body);
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 6px;
     background: var(--card-bg);
     color: var(--fg);
     outline: none;
+    box-shadow: var(--inset-shadow);
   }
   #search::placeholder { color: var(--muted); }
   #search:focus-visible {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+    box-shadow: var(--inset-shadow), 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
   }
 
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+  }
   .tabs {
     display: flex;
     flex-wrap: wrap;
     gap: 22px;
-    border-bottom: 1px solid var(--border);
   }
   .tab {
     appearance: none;
     border: none;
     background: none;
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-family: var(--font-body);
+    font-size: 0.86rem;
     padding: 0 0 10px;
     margin-bottom: -1px;
     border-bottom: 2px solid transparent;
@@ -145,9 +162,32 @@
   .tab:hover { color: var(--fg); }
   .tab.active {
     color: var(--fg);
+    font-weight: 600;
     border-bottom-color: var(--accent);
   }
   .tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .sort-wrap { padding-bottom: 10px; }
+  #sort {
+    appearance: none;
+    font-family: var(--font-body);
+    font-size: 0.83rem;
+    color: var(--fg);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 30px 7px 12px;
+    box-shadow: var(--inset-shadow);
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+    background-position: calc(100% - 16px) center, calc(100% - 11px) center;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+  }
+  #sort:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
@@ -156,8 +196,7 @@
 
   #count {
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     font-variant-numeric: tabular-nums;
     margin: 0 0 16px;
   }
@@ -165,51 +204,59 @@
   .grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 12px;
   }
 
   .card {
     border: 1px solid var(--border);
     background: var(--card-bg);
-    border-radius: 4px;
+    border-radius: 10px;
     padding: 20px;
     display: grid;
-    grid-template-columns: 52px 1fr 152px;
+    grid-template-columns: 1fr 190px;
     gap: 20px;
     align-items: start;
-    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
   }
   @media (prefers-reduced-motion: reduce) {
-    .card { transition: none; }
+    .card, .cta { transition: none; }
   }
   .card:hover {
     border-color: var(--muted);
-    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  .head {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    min-width: 0;
   }
 
   .stamp {
     width: 52px;
     height: 52px;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 8px;
+    background: linear-gradient(155deg, var(--card-bg), var(--chip-bg));
+    box-shadow: var(--stamp-shine);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-mono);
-    font-weight: 600;
-    font-size: 0.85rem;
-    letter-spacing: 0.02em;
+    font-weight: 700;
+    font-size: 0.9rem;
     color: var(--muted);
     transform: rotate(-3deg);
     flex-shrink: 0;
   }
 
+  .info { min-width: 0; }
   .info .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.76rem;
     color: var(--accent);
+    font-weight: 600;
     margin: 0 0 5px;
   }
   .info h2 {
@@ -223,46 +270,53 @@
     color: var(--muted);
     font-size: 0.89rem;
     margin: 0;
-    max-width: 46ch;
   }
 
-  .stats {
+  .aside {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    align-items: flex-end;
+    gap: 14px;
   }
-  .stat { text-align: right; }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 14px;
+  }
   .stat .label {
     display: block;
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.72rem;
     color: var(--muted);
     margin-bottom: 2px;
   }
   .stat .value {
     display: block;
-    font-family: var(--font-mono);
     font-size: 0.86rem;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
     color: var(--fg);
+    line-height: 1.3;
   }
 
   .cta {
-    display: inline-block;
-    padding: 8px 14px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 9px 14px;
     border: 1px solid var(--fg);
-    border-radius: 4px;
+    border-radius: 6px;
     color: var(--fg);
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-family: var(--font-body);
-    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(31, 36, 32, 0.08);
   }
-  .cta:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+  .cta:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-fg);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px -4px color-mix(in srgb, var(--accent) 55%, transparent);
+  }
   .cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .empty {
@@ -270,8 +324,7 @@
     color: var(--muted);
     padding: 60px 20px;
     display: none;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 
   footer {
@@ -283,18 +336,11 @@
   }
 
   @media (max-width: 640px) {
-    .card { grid-template-columns: 44px 1fr; }
-    .stamp { width: 44px; height: 44px; }
-    .stats {
-      grid-column: 1 / -1;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 6px;
+    .card { grid-template-columns: 1fr; }
+    .aside {
       padding-top: 14px;
       border-top: 1px solid var(--border);
     }
-    .stat { text-align: left; }
   }
 </style>
 </head>
@@ -309,9 +355,18 @@
 
   <div class="controls">
     <div class="search-wrap">
-      <input id="search" type="text" placeholder="Suche nach Name, Kategorie oder Stichwort…" autocomplete="off">
+      <input id="search" type="text" placeholder="Suche nach Name oder Kategorie…" autocomplete="off">
     </div>
-    <div class="tabs" id="tabs"></div>
+    <div class="filter-row">
+      <div class="tabs" id="tabs"></div>
+      <div class="sort-wrap">
+        <select id="sort">
+          <option value="default">Standard-Reihenfolge</option>
+          <option value="asc">Provision: aufsteigend</option>
+          <option value="desc">Provision: absteigend</option>
+        </select>
+      </div>
+    </div>
   </div>
 
   <main>
@@ -321,34 +376,35 @@
   </main>
 
   <footer>
-    Angaben zu Provisionen und Cookie-Laufzeiten sind Richtwerte auf Basis öffentlich verfügbarer Informationen und können sich ändern – Details bitte auf der jeweiligen Partnerseite prüfen.
+    Angaben zu Provisionen und Cookie-Laufzeiten sind Richtwerte auf Basis öffentlich verfügbarer Informationen und können sich ändern – Details bitte auf der jeweiligen Partnerseite prüfen. Bei der Provisions-Sortierung wird der höchste genannte Wert herangezogen; Programme ohne festen Wert stehen am Ende.
   </footer>
 </div>
 
 <script>
   const programs = [
-    { name: "Awin", category: "Netzwerk", desc: "Weltweit größtes Affiliate-Netzwerk mit über 25.000 Programmen, u. a. Otto, MediaMarkt, Puma.", commission: "je Programm unterschiedlich", cookie: "30–90 Tage", url: "https://www.awin.com/de" },
-    { name: "Digistore24", category: "Netzwerk", desc: "Deutschsprachiges Netzwerk für digitale Produkte wie Online-Kurse, E-Books und Software-Abos.", commission: "20–70 %", cookie: "je Produkt unterschiedlich", url: "https://www.digistore24.com/de/" },
-    { name: "Belboon", category: "Netzwerk", desc: "Berliner Affiliate-Netzwerk mit über 1.800 Programmen, Schwerpunkt Einzelhandel, Reisen, Finanzen.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.belboon.com/de/" },
-    { name: "Tradedoubler", category: "Netzwerk", desc: "International tätiges Netzwerk mit über 3.000 Partnerprogrammen und 180.000 aktiven Publishern.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.tradedoubler.com/de/" },
-    { name: "ADCELL", category: "Netzwerk", desc: "Berliner Netzwerk (seit 2003), rein performancebasiert, über 63.000 aktive Publisher.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.adcell.de/" },
-    { name: "SuperClix", category: "Netzwerk", desc: "Netzwerk aus Freiburg (seit 2000) mit über 500 exklusiven Partnerprogrammen.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.superclix.de/" },
-    { name: "financeAds", category: "Netzwerk", desc: "Spezialisiertes Netzwerk für Banken, Versicherungen und FinTechs.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.financeads.net/" },
-    { name: "Webgains", category: "Netzwerk", desc: "Internationales Netzwerk (seit 2004) mit über 1.850 angeschlossenen Advertisern.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.webgains.com/de/" },
-    { name: "CJ Affiliate", category: "Netzwerk", desc: "Großes internationales Affiliate-Netzwerk mit zahlreichen bekannten Marken.", commission: "je Programm unterschiedlich", cookie: "je Programm unterschiedlich", url: "https://www.cj.com/de" },
-    { name: "CHECK24", category: "Shopping & Vergleich", desc: "Vergleichsportal-Partnerprogramm für Strom, Gas, DSL, Reisen und Versicherungen.", commission: "bis 72,50 € pro Abschluss", cookie: "programmabhängig", url: "https://www.check24-partnerprogramm.de/" },
-    { name: "Amazon PartnerNet", category: "Shopping & Vergleich", desc: "Provision auf Produktverkäufe im Amazon-Shop, Sätze variieren stark nach Kategorie.", commission: "1–20 % je Kategorie", cookie: "24 Std. (bis 90 Tage bei Warenkorb)", url: "https://partnernet.amazon.de/" },
-    { name: "IONOS", category: "Hosting & Software", desc: "Partnerprogramm für Hosting, Domains und Website-Baukasten.", commission: "bis 100 € pro Lead", cookie: "30 Tage", url: "https://www.ionos.com/agency-partner/affiliate" },
-    { name: "Hostinger", category: "Hosting & Software", desc: "Hosting-Anbieter mit hoher Provisionsspanne und kostenlosem Einstieg.", commission: "bis 60 %", cookie: "programmabhängig", url: "https://www.hostinger.com/affiliates" },
-    { name: "Wix", category: "Hosting & Software", desc: "Baukasten-Anbieter, Provision pro verkauftem Premium-Abo.", commission: "bis 100 $ pro Sale", cookie: "30 Tage", url: "https://www.wix.com/about/affiliates" },
-    { name: "Brevo", category: "Hosting & Software", desc: "E-Mail-Marketing-Software (ehemals Sendinblue), Fixprovision pro Neukunde.", commission: "Fixprovision pro Abschluss", cookie: "90 Tage", url: "https://www.brevo.com/partners/affiliates/" },
-    { name: "Canva", category: "Hosting & Software", desc: "Design-Tool mit Affiliate-Programm für Content Creator.", commission: "bis 36 $ pro Pro-Abo", cookie: "programmabhängig", url: "https://www.canva.com/help/canva-affiliate-marketing-program/" },
-    { name: "Teachable", category: "Bildung & Kurse", desc: "Plattform für Online-Kurse mit wiederkehrender Provision pro Abo.", commission: "30 % wiederkehrend", cookie: "30–90 Tage", url: "https://teachable.com/partners" }
+    { name: "Awin", category: "Netzwerk", desc: "Weltweit größtes Affiliate-Netzwerk mit über 25.000 Programmen, u. a. Otto, MediaMarkt, Puma.", commission: "je Programm unterschiedlich", commissionValue: null, cookie: "30–90 Tage", url: "https://www.awin.com/de" },
+    { name: "Digistore24", category: "Netzwerk", desc: "Deutschsprachiges Netzwerk für digitale Produkte wie Online-Kurse, E-Books und Software-Abos.", commission: "20–70 %", commissionValue: 70, cookie: "je Produkt unterschiedlich", url: "https://www.digistore24.com/de/" },
+    { name: "Belboon", category: "Netzwerk", desc: "Berliner Affiliate-Netzwerk mit über 1.800 Programmen, Schwerpunkt Einzelhandel, Reisen, Finanzen.", commission: "je Programm unterschiedlich", commissionValue: null, cookie: "je Programm unterschiedlich", url: "https://www.belboon.com/de/" },
+    { name: "Tradedoubler", category: "Netzwerk", desc: "International tätiges Netzwerk mit über 3.000 Partnerprogrammen und 180.000 aktiven Publishern.", commission: "je Programm unterschiedlich", commissionValue: null, cookie: "je Programm unterschiedlich", url: "https://www.tradedoubler.com/de/" },
+    { name: "ADCELL", category: "Netzwerk", desc: "Berliner Netzwerk (seit 2003), rein performancebasiert, über 63.000 aktive Publisher.", commission: "je Programm unterschiedlich", commissionValue: null, cookie: "je Programm unterschiedlich", url: "https://www.adcell.de/" },
+    { name: "SuperClix", category: "Netzwerk", desc: "Netzwerk aus Freiburg (seit 2000) mit über 500 exklusiven Partnerprogrammen.", commission: "je Programm unterschiedlich", commissionValue: null, cookie: "je Programm unterschiedlich", url: "https://www.superclix.de/" },
+    { name: "financeAds", category: "Netzwerk", desc: "Spezialisiertes Netzwerk für Banken, Versicherungen und FinTechs.", commission: "je Programm unterschiedlich", commissionValue: null, cookie: "je Programm unterschiedlich", url: "https://www.financeads.net/" },
+    { name: "Webgains", category: "Netzwerk", desc: "Internationales Netzwerk (seit 2004) mit über 1.850 angeschlossenen Advertisern.", commission: "je Programm unterschiedlich", commissionValue: null, cookie: "je Programm unterschiedlich", url: "https://www.webgains.com/de/" },
+    { name: "CJ Affiliate", category: "Netzwerk", desc: "Großes internationales Affiliate-Netzwerk mit zahlreichen bekannten Marken.", commission: "je Programm unterschiedlich", commissionValue: null, cookie: "je Programm unterschiedlich", url: "https://www.cj.com/de" },
+    { name: "CHECK24", category: "Shopping & Vergleich", desc: "Vergleichsportal-Partnerprogramm für Strom, Gas, DSL, Reisen und Versicherungen.", commission: "bis 72,50 € pro Abschluss", commissionValue: 72.5, cookie: "programmabhängig", url: "https://www.check24-partnerprogramm.de/" },
+    { name: "Amazon PartnerNet", category: "Shopping & Vergleich", desc: "Provision auf Produktverkäufe im Amazon-Shop, Sätze variieren stark nach Kategorie.", commission: "1–20 % je Kategorie", commissionValue: 20, cookie: "24 Std. (bis 90 Tage bei Warenkorb)", url: "https://partnernet.amazon.de/" },
+    { name: "IONOS", category: "Hosting & Software", desc: "Partnerprogramm für Hosting, Domains und Website-Baukasten.", commission: "bis 100 € pro Lead", commissionValue: 100, cookie: "30 Tage", url: "https://www.ionos.com/agency-partner/affiliate" },
+    { name: "Hostinger", category: "Hosting & Software", desc: "Hosting-Anbieter mit hoher Provisionsspanne und kostenlosem Einstieg.", commission: "bis 60 %", commissionValue: 60, cookie: "programmabhängig", url: "https://www.hostinger.com/affiliates" },
+    { name: "Wix", category: "Hosting & Software", desc: "Baukasten-Anbieter, Provision pro verkauftem Premium-Abo.", commission: "bis 100 $ pro Sale", commissionValue: 100, cookie: "30 Tage", url: "https://www.wix.com/about/affiliates" },
+    { name: "Brevo", category: "Hosting & Software", desc: "E-Mail-Marketing-Software (ehemals Sendinblue), Fixprovision pro Neukunde.", commission: "Fixprovision pro Abschluss", commissionValue: null, cookie: "90 Tage", url: "https://www.brevo.com/partners/affiliates/" },
+    { name: "Canva", category: "Hosting & Software", desc: "Design-Tool mit Affiliate-Programm für Content Creator.", commission: "bis 36 $ pro Pro-Abo", commissionValue: 36, cookie: "programmabhängig", url: "https://www.canva.com/help/canva-affiliate-marketing-program/" },
+    { name: "Teachable", category: "Bildung & Kurse", desc: "Plattform für Online-Kurse mit wiederkehrender Provision pro Abo.", commission: "30 % wiederkehrend", commissionValue: 30, cookie: "30–90 Tage", url: "https://teachable.com/partners" }
   ];
 
   const grid = document.getElementById("grid");
   const tabsEl = document.getElementById("tabs");
   const searchEl = document.getElementById("search");
+  const sortEl = document.getElementById("sort");
   const countEl = document.getElementById("count");
   const emptyEl = document.getElementById("empty");
 
@@ -374,20 +430,24 @@
     const initials = p.name.slice(0, 2).toUpperCase();
     return `
       <div class="card">
-        <div class="stamp">${initials}</div>
-        <div class="info">
-          <p class="eyebrow">${p.category}</p>
-          <h2>${p.name}</h2>
-          <p class="desc">${p.desc}</p>
-        </div>
-        <div class="stats">
-          <div class="stat">
-            <span class="label">Provision</span>
-            <span class="value">${p.commission}</span>
+        <div class="head">
+          <div class="stamp">${initials}</div>
+          <div class="info">
+            <p class="eyebrow">${p.category}</p>
+            <h2>${p.name}</h2>
+            <p class="desc">${p.desc}</p>
           </div>
-          <div class="stat">
-            <span class="label">Cookie</span>
-            <span class="value">${p.cookie}</span>
+        </div>
+        <div class="aside">
+          <div class="stats-grid">
+            <div class="stat">
+              <span class="label">Provision</span>
+              <span class="value">${p.commission}</span>
+            </div>
+            <div class="stat">
+              <span class="label">Cookie</span>
+              <span class="value">${p.cookie}</span>
+            </div>
           </div>
           <a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Zum Programm →</a>
         </div>
@@ -396,12 +456,22 @@
 
   function renderGrid() {
     const q = searchEl.value.trim().toLowerCase();
-    const filtered = programs.filter(p => {
+    let filtered = programs.filter(p => {
       const matchesCategory = activeCategory === "Alle" || p.category === activeCategory;
       const haystack = (p.name + " " + p.category + " " + p.desc).toLowerCase();
       const matchesSearch = q === "" || haystack.includes(q);
       return matchesCategory && matchesSearch;
     });
+
+    const sortMode = sortEl.value;
+    if (sortMode !== "default") {
+      filtered = filtered.slice().sort((a, b) => {
+        if (a.commissionValue == null && b.commissionValue == null) return 0;
+        if (a.commissionValue == null) return 1;
+        if (b.commissionValue == null) return -1;
+        return sortMode === "asc" ? a.commissionValue - b.commissionValue : b.commissionValue - a.commissionValue;
+      });
+    }
 
     grid.innerHTML = filtered.map(cardHtml).join("");
     countEl.textContent = `${filtered.length} von ${programs.length} Programmen`;
@@ -409,6 +479,7 @@
   }
 
   searchEl.addEventListener("input", renderGrid);
+  sortEl.addEventListener("change", renderGrid);
 
   renderTabs();
   renderGrid();
