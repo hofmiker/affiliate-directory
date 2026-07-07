@@ -201,6 +201,7 @@
   }
 
   .grid {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     gap: 18px;
@@ -242,6 +243,7 @@
     font-size: 0.82rem;
     flex-shrink: 0;
   }
+  .badge svg { width: 20px; height: 20px; display: block; }
   .eyebrow {
     font-size: 0.72rem;
     font-weight: 600;
@@ -251,7 +253,7 @@
 
   .card h2 {
     font-family: var(--font-display);
-    font-size: 1.34rem;
+    font-size: 1.56rem;
     font-weight: 800;
     letter-spacing: -0.01em;
     margin: 0 0 8px;
@@ -273,10 +275,10 @@
   }
   .commission .value {
     display: block;
-    font-size: 1.28rem;
-    font-weight: 800;
+    font-size: 1.1rem;
+    font-weight: 700;
     font-variant-numeric: tabular-nums;
-    line-height: 1.2;
+    line-height: 1.25;
   }
   .cookie {
     margin: 0 0 20px;
@@ -369,10 +371,10 @@
     { name: "CJ Affiliate", category: "Netzwerk", desc: "Großes internationales Affiliate-Netzwerk mit zahlreichen bekannten Marken.", commission: "je Programm unterschiedlich", commissionValue: null, cookie: "je Programm unterschiedlich", url: "https://www.cj.com/de", color: "#1B7340" },
     { name: "CHECK24", category: "Shopping & Vergleich", desc: "Vergleichsportal-Partnerprogramm für Strom, Gas, DSL, Reisen und Versicherungen.", commission: "bis 72,50 € pro Abschluss", commissionValue: 72.5, cookie: "programmabhängig", url: "https://www.check24-partnerprogramm.de/", color: "#005EA8" },
     { name: "Amazon PartnerNet", category: "Shopping & Vergleich", desc: "Provision auf Produktverkäufe im Amazon-Shop, Sätze variieren stark nach Kategorie.", commission: "1–20 % je Kategorie", commissionValue: 20, cookie: "24 Std. (bis 90 Tage bei Warenkorb)", url: "https://partnernet.amazon.de/", color: "#FF9900" },
-    { name: "IONOS", category: "Hosting & Software", desc: "Partnerprogramm für Hosting, Domains und Website-Baukasten.", commission: "bis 100 € pro Lead", commissionValue: 100, cookie: "30 Tage", url: "https://www.ionos.com/agency-partner/affiliate", color: "#0B4F9E" },
-    { name: "Hostinger", category: "Hosting & Software", desc: "Hosting-Anbieter mit hoher Provisionsspanne und kostenlosem Einstieg.", commission: "bis 60 %", commissionValue: 60, cookie: "programmabhängig", url: "https://www.hostinger.com/affiliates", color: "#674CC4" },
-    { name: "Wix", category: "Hosting & Software", desc: "Baukasten-Anbieter, Provision pro verkauftem Premium-Abo.", commission: "bis 100 $ pro Sale", commissionValue: 100, cookie: "30 Tage", url: "https://www.wix.com/about/affiliates", color: "#111111" },
-    { name: "Brevo", category: "Hosting & Software", desc: "E-Mail-Marketing-Software (ehemals Sendinblue), Fixprovision pro Neukunde.", commission: "Fixprovision pro Abschluss", commissionValue: null, cookie: "90 Tage", url: "https://www.brevo.com/partners/affiliates/", color: "#0B996E" },
+    { name: "IONOS", category: "Hosting & Software", desc: "Partnerprogramm für Hosting, Domains und Website-Baukasten.", commission: "bis 100 € pro Lead", commissionValue: 100, cookie: "30 Tage", url: "https://www.ionos.com/agency-partner/affiliate", color: "#003D8F", svg: "M22.182 15.499a1.7634 1.7634 0 0 1-.3536-.0358 1.8319 1.8319 0 0 1-1.2086-.8632l-.0066-.012c-.1308-.2616-.0448-.5693.2-.7162a.5236.5236 0 0 1 .2689-.0743.5327.5327 0 0 1 .4632.272.558.558 0 0 0 .018.0299l.0564.0766.0757.0765a.7385.7385 0 0 0 .3453.167.7596.7596 0 0 0 .5954-.136.7206.7206 0 0 0 .299-.5386.7441.7441 0 0 0-.207-.578s-1.5994-1.6612-1.6712-1.7382a1.9604 1.9604 0 0 1-.1929-.229c-.2256-.3198-.2962-.697-.2614-1.0702a1.7361 1.7361 0 0 1 .2253-.7397s.0732-.124.0948-.1554c.0847-.1236.2515-.2834.3658-.3726a1.8813 1.8813 0 0 1 .3069-.1844 1.7494 1.7494 0 0 1 2.2815.7041.5186.5186 0 0 1 .0553.402.5298.5298 0 0 1-.2528.3263.5082.5082 0 0 1-.2593.0705.5283.5283 0 0 1-.46-.2706.6953.6953 0 0 0-.4656-.329.721.721 0 0 0-.5645.1269.688.688 0 0 0-.267.498.6998.6998 0 0 0 .1905.5398l1.6351 1.6862a1.8284 1.8284 0 0 1 .5071 1.3931c-.0465.5243-.3071.9994-.7152 1.3053a1.8425 1.8425 0 0 1-1.0984.369m-5.175-.0006a1.7608 1.7608 0 0 0 1.7585-1.7589v-3.4787a1.7587 1.7587 0 0 0-3.5173 0v3.4786a1.7608 1.7608 0 0 0 1.7587 1.7589m0-5.9342c.3777 0 .6968.319.6968.6967v3.4786a.6977.6977 0 0 1-.6968.6968.6894.6894 0 0 1-.6968-.6968v-3.4786a.6976.6976 0 0 1 .697-.6967m-7.8986.3224v5.0804a.5309.5309 0 0 0 1.0618 0V12.09Zm2.8802 2.0255V9.0328a.531.531 0 0 1 1.0619 0v5.0828zm1.053 2.9406v.1134a.533.533 0 0 1-1.0067.2408L9.1153 9.154v-.1212a.5261.5261 0 0 1 .3028-.4772.5253.5253 0 0 1 .7088.2475Zm-7.9067.6457a1.761 1.761 0 0 0 1.7586-1.7589v-3.4786a1.7587 1.7587 0 0 0-3.5173 0v3.4786a1.7609 1.7609 0 0 0 1.7587 1.7589m0-5.9342a.707.707 0 0 1 .6968.6967v3.4786a.6968.6968 0 1 1-1.3936 0v-3.4786a.6976.6976 0 0 1 .6968-.6967M0 14.9111a.5791.5791 0 1 0 1.1581 0V9.0803a.5791.5791 0 0 0-1.1582 0z" },
+    { name: "Hostinger", category: "Hosting & Software", desc: "Hosting-Anbieter mit hoher Provisionsspanne und kostenlosem Einstieg.", commission: "bis 60 %", commissionValue: 60, cookie: "programmabhängig", url: "https://www.hostinger.com/affiliates", color: "#673DE6", svg: "M16.415 0v7.16l5.785 3.384V2.949L16.415 0ZM1.8 0v11.237h18.815L14.89 8.09l-7.457-.003V3.024L1.8 0Zm14.615 20.894v-5.019l-7.514-.005c.007.033-5.82-3.197-5.82-3.197l19.119.091V24l-5.785-3.106ZM1.8 13.551v7.343l5.633 2.949v-6.988L1.8 13.551Z" },
+    { name: "Wix", category: "Hosting & Software", desc: "Baukasten-Anbieter, Provision pro verkauftem Premium-Abo.", commission: "bis 100 $ pro Sale", commissionValue: 100, cookie: "30 Tage", url: "https://www.wix.com/about/affiliates", color: "#0C6EFC", svg: "m0 7.354 2.113 9.292h.801a1.54 1.54 0 0 0 1.506-1.218l1.351-6.34a.171.171 0 0 1 .167-.137c.08 0 .15.058.167.137l1.352 6.34a1.54 1.54 0 0 0 1.506 1.218h.805l2.113-9.292h-.565c-.62 0-1.159.43-1.296 1.035l-1.26 5.545-1.106-5.176a1.76 1.76 0 0 0-2.19-1.324c-.639.176-1.113.716-1.251 1.365l-1.094 5.127-1.26-5.537A1.33 1.33 0 0 0 .563 7.354H0zm13.992 0a.951.951 0 0 0-.951.95v8.342h.635a.952.952 0 0 0 .951-.95V7.353h-.635zm1.778 0 3.158 4.66-3.14 4.632h1.325c.368 0 .712-.181.918-.486l1.756-2.59a.12.12 0 0 1 .197 0l1.754 2.59c.206.305.55.486.918.486h1.326l-3.14-4.632L24 7.354h-1.326c-.368 0-.712.181-.918.486l-1.772 2.617a.12.12 0 0 1-.197 0L18.014 7.84a1.108 1.108 0 0 0-.918-.486H15.77z" },
+    { name: "Brevo", category: "Hosting & Software", desc: "E-Mail-Marketing-Software (ehemals Sendinblue), Fixprovision pro Neukunde.", commission: "Fixprovision pro Abschluss", commissionValue: null, cookie: "90 Tage", url: "https://www.brevo.com/partners/affiliates/", color: "#0B996E", svg: "M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zM7.2 4.8h5.747c2.34 0 3.895 1.406 3.895 3.516 0 1.022-.348 1.862-1.09 2.588C17.189 11.812 18 13.22 18 14.785c0 2.86-2.64 5.016-6.164 5.016H7.199v-15zm2.085 1.952v5.537h.07c.233-.432.858-.796 2.249-1.226 2.039-.659 3.037-1.52 3.037-2.655 0-.998-.766-1.656-1.924-1.656H9.285zm4.87 5.266c-.766.385-1.67.748-2.76 1.11-1.229.387-2.11 1.386-2.11 2.407v2.315h2.365c2.387 0 4.149-1.34 4.149-3.155 0-1.067-.625-2.087-1.645-2.677z" },
     { name: "Canva", category: "Hosting & Software", desc: "Design-Tool mit Affiliate-Programm für Content Creator.", commission: "bis 36 $ pro Pro-Abo", commissionValue: 36, cookie: "programmabhängig", url: "https://www.canva.com/help/canva-affiliate-marketing-program/", color: "#7D2AE7" },
     { name: "Teachable", category: "Bildung & Kurse", desc: "Plattform für Online-Kurse mit wiederkehrender Provision pro Abo.", commission: "30 % wiederkehrend", commissionValue: 30, cookie: "30–90 Tage", url: "https://teachable.com/partners", color: "#1F56C6" }
   ];
@@ -410,24 +412,36 @@
     });
   }
 
-  function cardHtml(p) {
+  function cardInnerHtml(p) {
     const initials = p.name.slice(0, 2).toUpperCase();
-    const fg = textColorFor(p.color);
+    const badgeContent = p.svg
+      ? `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${p.svg}"/></svg>`
+      : initials;
     return `
-      <div class="card" style="--tile: ${p.color}; --tile-fg: ${fg};">
-        <div class="card-top">
-          <div class="badge">${initials}</div>
-          <p class="eyebrow">${p.category}</p>
-        </div>
-        <h2>${p.name}</h2>
-        <p class="desc">${p.desc}</p>
-        <div class="commission">
-          <span class="label">Provision</span>
-          <span class="value">${p.commission}</span>
-        </div>
-        <p class="cookie"><span class="label">Cookie</span>${p.cookie}</p>
-        <div><a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Zum Programm →</a></div>
-      </div>`;
+      <div class="card-top">
+        <div class="badge">${badgeContent}</div>
+        <p class="eyebrow">${p.category}</p>
+      </div>
+      <h2>${p.name}</h2>
+      <p class="desc">${p.desc}</p>
+      <div class="commission">
+        <span class="label">Provision</span>
+        <span class="value">${p.commission}</span>
+      </div>
+      <p class="cookie"><span class="label">Cookie</span>${p.cookie}</p>
+      <div><a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Zum Programm →</a></div>`;
+  }
+
+  const cardEls = new Map();
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function buildCardEl(p) {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.style.setProperty("--tile", p.color);
+    el.style.setProperty("--tile-fg", textColorFor(p.color));
+    el.innerHTML = cardInnerHtml(p);
+    return el;
   }
 
   function renderGrid() {
@@ -449,9 +463,81 @@
       });
     }
 
-    grid.innerHTML = filtered.map(cardHtml).join("");
     countEl.textContent = `${filtered.length} von ${programs.length} Programmen`;
     emptyEl.style.display = filtered.length === 0 ? "block" : "none";
+
+    const filteredSet = new Set(filtered.map(p => p.name));
+    const gridRect = grid.getBoundingClientRect();
+
+    const firstRects = new Map();
+    cardEls.forEach((el, name) => {
+      if (filteredSet.has(name)) firstRects.set(name, el.getBoundingClientRect());
+    });
+
+    cardEls.forEach((el, name) => {
+      if (filteredSet.has(name)) return;
+      cardEls.delete(name);
+      if (reduceMotion) {
+        el.remove();
+        return;
+      }
+      const r = el.getBoundingClientRect();
+      el.style.position = "absolute";
+      el.style.left = (r.left - gridRect.left) + "px";
+      el.style.top = (r.top - gridRect.top) + "px";
+      el.style.width = r.width + "px";
+      el.style.margin = "0";
+      el.style.transition = "opacity .2s ease, transform .2s ease";
+      requestAnimationFrame(() => {
+        el.style.opacity = "0";
+        el.style.transform = "scale(.92)";
+      });
+      setTimeout(() => el.remove(), 220);
+    });
+
+    filtered.forEach(p => {
+      let el = cardEls.get(p.name);
+      if (!el) {
+        el = buildCardEl(p);
+        cardEls.set(p.name, el);
+      }
+      grid.appendChild(el);
+    });
+
+    if (reduceMotion) return;
+
+    filtered.forEach(p => {
+      const el = cardEls.get(p.name);
+      const first = firstRects.get(p.name);
+      if (first) {
+        const last = el.getBoundingClientRect();
+        const dx = first.left - last.left;
+        const dy = first.top - last.top;
+        if (dx || dy) {
+          el.style.transition = "none";
+          el.style.transform = `translate(${dx}px, ${dy}px)`;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              el.style.transition = "transform .32s cubic-bezier(.2,.8,.3,1)";
+              el.style.transform = "";
+              el.addEventListener("transitionend", () => { el.style.transition = ""; }, { once: true });
+            });
+          });
+        }
+      } else {
+        el.style.transition = "none";
+        el.style.opacity = "0";
+        el.style.transform = "scale(.94)";
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.style.transition = "opacity .28s ease, transform .28s cubic-bezier(.2,.8,.3,1)";
+            el.style.opacity = "1";
+            el.style.transform = "";
+            el.addEventListener("transitionend", () => { el.style.transition = ""; }, { once: true });
+          });
+        });
+      }
+    });
   }
 
   searchEl.addEventListener("input", renderGrid);
