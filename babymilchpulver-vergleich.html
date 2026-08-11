@@ -335,20 +335,16 @@
 
   main { padding: 22px 0 44px; }
 
-  .winner {
-    position: relative;
+  .card.card-winner {
+    grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
     gap: 22px;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 28px;
     padding: 34px 24px 28px;
-    box-shadow: var(--tile-shadow);
-    margin-bottom: 26px;
+    border-radius: 28px;
   }
   @media (min-width: 720px) {
-    .winner {
+    .card.card-winner {
       flex-direction: row;
       align-items: center;
       padding: 20px 44px;
@@ -668,7 +664,6 @@
   </div>
 
   <main>
-    <div id="winner"></div>
     <p id="count"></p>
     <div class="grid" id="grid"></div>
     <div class="empty" id="empty">Keine Treffer für diese Suche.</div>
@@ -869,13 +864,23 @@
   }
 
   function cardInnerHtml(p) {
-    const rankClass = p.rank === 1 ? "r1" : p.rank === 2 ? "r2" : p.rank === 3 ? "r3" : "";
+    const isWinner = p.rank === 1;
+    const mediaClass = isWinner ? "winner-media" : "card-media";
+    const bodyOpen = isWinner ? '<div class="winner-body">' : "";
+    const bodyClose = isWinner ? "</div>" : "";
+    const badge = isWinner
+      ? `<div class="winner-ribbon">🏆 Testsieger ${p.score.toFixed(1)} / 100</div>`
+      : `<div class="rank-badge ${p.rank === 2 ? "r2" : p.rank === 3 ? "r3" : ""}">#${p.rank}</div>`;
+    const cta = isWinner
+      ? `<a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Preise &amp; Angebote ansehen →</a>`
+      : `<div><a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Preise &amp; Angebote ansehen →</a></div>`;
     return `
-      <div class="rank-badge ${rankClass}">#${p.rank}</div>
-      <div class="card-media">
+      ${badge}
+      <div class="${mediaClass}">
         <img class="product-photo" src="${p.photo}" alt="${p.name} Markenbild" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="media-fallback">${tinSvg(p)}</div>
       </div>
+      ${bodyOpen}
       <div class="card-top">
         <p class="eyebrow">${p.category}</p>
         <p class="price-tag">${p.price}</p>
@@ -905,62 +910,18 @@
         </div>
       </div>
       <p class="fact-line"><strong>${p.testLabel}</strong> · ${p.reviewsLabel}</p>
-      <div><a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Preise &amp; Angebote ansehen →</a></div>`;
+      ${cta}
+      ${bodyClose}`;
   }
 
   const cardEls = new Map();
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function buildCardEl(p) {
     const el = document.createElement("div");
-    el.className = "card";
+    el.className = p.rank === 1 ? "card card-winner" : "card";
     el.innerHTML = cardInnerHtml(p);
     return el;
-  }
-
-  function renderWinner() {
-    const winnerEl = document.getElementById("winner");
-    if (!winnerEl) return;
-    const p = products[0];
-    winnerEl.innerHTML = `
-      <div class="winner">
-        <div class="winner-ribbon">🏆 Testsieger ${p.score.toFixed(1)} / 100</div>
-        <div class="winner-media">
-          <img class="product-photo" src="${p.photo}" alt="${p.name} Markenbild" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div class="media-fallback">${tinSvg(p)}</div>
-        </div>
-        <div class="winner-body">
-          <div class="card-top">
-            <p class="eyebrow">${p.category}</p>
-            <p class="price-tag">${p.price}</p>
-          </div>
-          <h2>${p.name}</h2>
-          <p class="maker">Hersteller: ${p.maker}</p>
-          <p class="desc">${p.desc}</p>
-          <div class="score-row">
-            <span class="num">${p.score.toFixed(1)}</span>
-            <span class="of">/ 100 Punkte</span>
-          </div>
-          <div class="breakdown">
-            <div class="bd-row">
-              <span class="bd-label">Shop-Bewertung</span>
-              <span class="bd-track"><span class="bd-fill" style="width:${(p.shopRating/5*100).toFixed(0)}%"></span></span>
-              <span class="bd-val">${p.shopRating.toFixed(2)}★</span>
-            </div>
-            <div class="bd-row">
-              <span class="bd-label">Testurteil</span>
-              <span class="bd-track"><span class="bd-fill" style="width:${((6-p.testGrade)/5*100).toFixed(0)}%"></span></span>
-              <span class="bd-val">${p.testGrade.toFixed(1)}</span>
-            </div>
-            <div class="bd-row">
-              <span class="bd-label">Bewertungsmenge</span>
-              <span class="bd-track"><span class="bd-fill" style="width:${(p.reviewsTier/10*100).toFixed(0)}%"></span></span>
-              <span class="bd-val">${p.reviewsTier}/10</span>
-            </div>
-          </div>
-          <p class="fact-line"><strong>${p.testLabel}</strong> · ${p.reviewsLabel}</p>
-          <a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Preise &amp; Angebote ansehen →</a>
-        </div>
-      </div>`;
   }
 
   function renderGrid() {
@@ -984,16 +945,77 @@
     countEl.textContent = `${filtered.length} von ${products.length} Produkten`;
     emptyEl.style.display = filtered.length === 0 ? "block" : "none";
 
-    grid.innerHTML = "";
+    const filteredSet = new Set(filtered.map(p => p.name));
+    const gridRect = grid.getBoundingClientRect();
+
+    const firstRects = new Map();
+    cardEls.forEach((el, name) => {
+      if (filteredSet.has(name)) firstRects.set(name, el.getBoundingClientRect());
+    });
+
+    cardEls.forEach((el, name) => {
+      if (filteredSet.has(name)) return;
+      cardEls.delete(name);
+      if (reduceMotion) {
+        el.remove();
+        return;
+      }
+      const r = el.getBoundingClientRect();
+      el.style.position = "absolute";
+      el.style.left = (r.left - gridRect.left) + "px";
+      el.style.top = (r.top - gridRect.top) + "px";
+      el.style.width = r.width + "px";
+      el.style.margin = "0";
+      el.style.transition = "opacity .2s ease, transform .2s ease";
+      requestAnimationFrame(() => {
+        el.style.opacity = "0";
+        el.style.transform = "scale(.92)";
+      });
+      setTimeout(() => el.remove(), 220);
+    });
+
     filtered.forEach(p => {
       let el = cardEls.get(p.name);
       if (!el) {
         el = buildCardEl(p);
         cardEls.set(p.name, el);
-      } else {
-        el.innerHTML = cardInnerHtml(p);
       }
       grid.appendChild(el);
+    });
+
+    if (reduceMotion) return;
+
+    filtered.forEach(p => {
+      const el = cardEls.get(p.name);
+      const first = firstRects.get(p.name);
+      if (first) {
+        const last = el.getBoundingClientRect();
+        const dx = first.left - last.left;
+        const dy = first.top - last.top;
+        if (dx || dy) {
+          el.style.transition = "none";
+          el.style.transform = `translate(${dx}px, ${dy}px)`;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              el.style.transition = "transform .32s cubic-bezier(.2,.8,.3,1)";
+              el.style.transform = "";
+              el.addEventListener("transitionend", () => { el.style.transition = ""; }, { once: true });
+            });
+          });
+        }
+      } else {
+        el.style.transition = "none";
+        el.style.opacity = "0";
+        el.style.transform = "scale(.94)";
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.style.transition = "opacity .28s ease, transform .28s cubic-bezier(.2,.8,.3,1)";
+            el.style.opacity = "1";
+            el.style.transform = "";
+            el.addEventListener("transitionend", () => { el.style.transition = ""; }, { once: true });
+          });
+        });
+      }
     });
   }
 
@@ -1001,14 +1023,12 @@
   sortEl.addEventListener("change", renderGrid);
 
   renderTabs();
-  renderWinner();
   renderGrid();
 
   (function initParallax() {
     const banner = document.getElementById("heroBanner");
     if (!banner) return;
     const bubbles = Array.from(banner.querySelectorAll(".bubble"));
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion || bubbles.length === 0) return;
 
     let ticking = false;
