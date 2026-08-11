@@ -123,6 +123,10 @@
     opacity: var(--o, 0.85);
     will-change: transform;
   }
+  .hero-banner .bubble.bubble-pink {
+    background: color-mix(in srgb, var(--accent) 55%, var(--card-bg) 45%);
+    border-color: color-mix(in srgb, #ffffff 65%, var(--accent) 35%);
+  }
   .hero-image {
     display: block;
     margin: 0 auto;
@@ -156,7 +160,7 @@
   }
 
   .method {
-    margin: 26px 0 0;
+    margin: 36px 0 0;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 18px;
@@ -174,71 +178,6 @@
     font-size: 0.86rem;
     margin: 0 0 16px;
   }
-  .method-chart {
-    display: flex;
-    align-items: center;
-    gap: 26px;
-    flex-wrap: wrap;
-  }
-  .ring {
-    position: relative;
-    flex-shrink: 0;
-    width: 116px;
-    height: 116px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: conic-gradient(
-      var(--accent) 0% 60%,
-      var(--gold) 60% 90%,
-      var(--silver) 90% 100%
-    );
-  }
-  .ring::before {
-    content: "";
-    position: absolute;
-    inset: 17px;
-    border-radius: 50%;
-    background: var(--card-bg);
-    box-shadow: var(--inset-shadow);
-  }
-  .ring-legend {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1 1 220px;
-    min-width: 220px;
-  }
-  .ring-legend li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .ring-legend .dot {
-    width: 12px;
-    height: 12px;
-    margin-top: 4px;
-    border-radius: 50%;
-    background: var(--dot);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
-  }
-  .ring-legend strong {
-    display: block;
-    font-size: 0.86rem;
-    font-weight: 700;
-  }
-  .ring-legend small {
-    display: block;
-    font-size: 0.76rem;
-    color: var(--muted);
-    margin-top: 1px;
-  }
-
   .controls {
     padding: 22px 0 0;
     position: sticky;
@@ -602,10 +541,17 @@
   .legend li { display: flex; align-items: center; gap: 7px; list-style: none; }
   .legend { padding: 0; margin-left: 0; }
 
+  .score-visuals {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 48px;
+    padding: 12px 0 40px;
+  }
   .rating-chart-wrap {
     display: flex;
     justify-content: center;
-    padding: 12px 0 40px;
   }
   .rating-chart {
     position: relative;
@@ -697,6 +643,85 @@
     }
     .rating-chart-label.is-active { transform: scale(1.04); }
   }
+
+  .bottle-chart-wrap {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .bottle-svg {
+    width: 158px;
+    height: auto;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+  .bottle-scale line {
+    stroke: var(--border);
+    stroke-width: 2.5;
+  }
+  .bottle-outline, .bottle-outline-top {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 2.5;
+  }
+  .bottle-collar {
+    fill: color-mix(in srgb, var(--gold) 55%, var(--card-bg));
+    stroke: var(--border);
+    stroke-width: 2;
+  }
+  .bottle-neck, .bottle-body {
+    fill: var(--card-bg);
+    stroke: var(--border);
+    stroke-width: 2.5;
+  }
+  .bottle-band {
+    cursor: pointer;
+    stroke: transparent;
+    stroke-width: 3;
+    transition: opacity 0.2s ease, filter 0.2s ease, stroke 0.2s ease;
+  }
+  .bottle-band.is-active {
+    filter: brightness(1.12);
+    stroke: var(--fg);
+  }
+  .bottle-band.is-dim { opacity: 0.28; }
+  .bottle-band-sep {
+    fill: rgba(255, 253, 248, 0.55);
+    pointer-events: none;
+  }
+
+  .bottle-info {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bottle-info li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  }
+  .bottle-info li:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .bottle-info .dot {
+    width: 12px;
+    height: 12px;
+    margin-top: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+  .bottle-info strong { display: block; font-size: 0.86rem; font-weight: 700; }
+  .bottle-info small { display: block; font-size: 0.76rem; color: var(--muted); margin-top: 1px; }
+  .bottle-info li.is-active { background: var(--chip-bg); transform: translateX(3px); }
+  .bottle-info li.is-dim { opacity: 0.45; }
 
   .status-chip {
     display: inline-flex;
@@ -795,43 +820,21 @@
       <div class="bubbles-layer behind" aria-hidden="true">
         <span class="bubble" style="--x:4%; --y:8%; --s:56px; --o:0.55;" data-speed="0.10"></span>
         <span class="bubble" style="--x:82%; --y:4%; --s:38px; --o:0.65;" data-speed="0.16"></span>
-        <span class="bubble" style="--x:88%; --y:52%; --s:70px; --o:0.5;" data-speed="0.08"></span>
+        <span class="bubble bubble-pink" style="--x:88%; --y:52%; --s:70px; --o:0.5;" data-speed="0.08"></span>
         <span class="bubble" style="--x:2%; --y:60%; --s:44px; --o:0.6;" data-speed="0.14"></span>
-        <span class="bubble" style="--x:46%; --y:0%; --s:26px; --o:0.7;" data-speed="0.2"></span>
+        <span class="bubble bubble-pink" style="--x:46%; --y:0%; --s:26px; --o:0.7;" data-speed="0.2"></span>
         <span class="bubble" style="--x:14%; --y:82%; --s:30px; --o:0.55;" data-speed="0.12"></span>
       </div>
       <img class="hero-image" src="images/hero-baby-flasche.png" alt="Illustration: Baby trinkt aus dem Fläschchen" width="760" height="989">
       <div class="bubbles-layer front" aria-hidden="true">
         <span class="bubble" style="--x:10%; --y:70%; --s:34px; --o:0.85;" data-speed="0.35"></span>
-        <span class="bubble" style="--x:78%; --y:78%; --s:22px; --o:0.9;" data-speed="0.45"></span>
+        <span class="bubble bubble-pink" style="--x:78%; --y:78%; --s:22px; --o:0.9;" data-speed="0.45"></span>
         <span class="bubble" style="--x:86%; --y:22%; --s:18px; --o:0.85;" data-speed="0.3"></span>
         <span class="bubble" style="--x:6%; --y:30%; --s:16px; --o:0.8;" data-speed="0.4"></span>
       </div>
     </div>
     <p class="sub">Die 10 wichtigsten Pre-Anfangsmilch-Pulver in Deutschland im Ranking – berechnet aus echten Kundenbewertungen deutscher Online-Shops sowie unabhängigen Testurteilen. Stand: 10. August 2026.</p>
   </header>
-
-  <div class="method">
-    <h2>So berechnen wir die Punktzahl</h2>
-    <p>Jedes Produkt erhält eine Gesamtpunktzahl von 0–100, zusammengesetzt aus drei Faktoren. Grundlage sind Kundenbewertungen von dm.de, Amazon.de, Rossmann.de, idealo.de und Geizhals.de sowie Testurteile von Stiftung Warentest und Öko-Test.</p>
-    <div class="method-chart">
-      <div class="ring" role="img" aria-label="Ringdiagramm: 60 Prozent Shop-Kundenbewertung, 30 Prozent unabhängiges Testurteil, 10 Prozent Bewertungsvolumen"></div>
-      <ul class="ring-legend">
-        <li>
-          <span class="dot" style="--dot: var(--accent);"></span>
-          <div><strong>60 % Shop-Kundenbewertung</strong><small>Ø Sterne (1–5) aus mehreren Online-Shops</small></div>
-        </li>
-        <li>
-          <span class="dot" style="--dot: var(--gold);"></span>
-          <div><strong>30 % Unabhängiges Testurteil</strong><small>Stiftung Warentest / Öko-Test Schulnote</small></div>
-        </li>
-        <li>
-          <span class="dot" style="--dot: var(--silver);"></span>
-          <div><strong>10 % Bewertungsvolumen</strong><small>Verlässlichkeit durch Anzahl Bewertungen</small></div>
-        </li>
-      </ul>
-    </div>
-  </div>
 
   <div class="controls">
     <div class="search-wrap">
@@ -854,6 +857,11 @@
     <div class="grid" id="grid"></div>
     <div class="empty" id="empty">Keine Treffer für diese Suche.</div>
 
+    <div class="method">
+      <h2>So berechnen wir die Punktzahl</h2>
+      <p>Jedes Produkt erhält eine Gesamtpunktzahl von 0–100, zusammengesetzt aus drei Faktoren. Grundlage sind Kundenbewertungen von dm.de, Amazon.de, Rossmann.de, idealo.de und Geizhals.de sowie Testurteile von Stiftung Warentest und Öko-Test.</p>
+    </div>
+
     <div class="transparency">
       <h2>Datengrundlage: was ist belegt, was ist geschätzt?</h2>
       <p>Diese Seite wurde per Recherche zusammengestellt, nicht per Live-Anbindung an Shop-APIs. Nicht für jeden Wert gab es eine konkrete, öffentlich auffindbare Zahl. Die Tabelle zeigt für jedes Produkt offen, welcher Wert belegt ist (mit Quelle), welcher aus einer echten Zahl umgerechnet wurde, und welcher eine eigene Einschätzung ohne konkrete Quelle ist.</p>
@@ -863,17 +871,37 @@
         <li><span class="status-chip est">Geschätzt</span> keine konkrete Quelle gefunden, eigene Einschätzung</li>
       </ul>
 
-      <div class="rating-chart-wrap">
-        <div class="rating-chart" id="ratingChart">
-          <div class="rating-chart-ring">
-            <svg class="rating-chart-svg" viewBox="0 0 220 220" aria-hidden="true">
-              <circle class="seg-track" cx="110" cy="110" r="84"></circle>
-              <circle class="seg" data-seg="0" cx="110" cy="110" r="84"></circle>
-              <circle class="seg" data-seg="1" cx="110" cy="110" r="84"></circle>
-              <circle class="seg" data-seg="2" cx="110" cy="110" r="84"></circle>
-            </svg>
+      <div class="score-visuals">
+        <div class="rating-chart-wrap">
+          <div class="rating-chart" id="ratingChart">
+            <div class="rating-chart-ring">
+              <svg class="rating-chart-svg" viewBox="0 0 220 220" aria-hidden="true">
+                <circle class="seg-track" cx="110" cy="110" r="84"></circle>
+                <circle class="seg" data-seg="0" cx="110" cy="110" r="84"></circle>
+                <circle class="seg" data-seg="1" cx="110" cy="110" r="84"></circle>
+                <circle class="seg" data-seg="2" cx="110" cy="110" r="84"></circle>
+              </svg>
+            </div>
+            <div class="rating-chart-labels" id="ratingChartLabels"></div>
           </div>
-          <div class="rating-chart-labels" id="ratingChartLabels"></div>
+        </div>
+
+        <div class="bottle-chart-wrap">
+          <svg class="bottle-svg" id="bottleSvg" viewBox="0 0 220 340" aria-hidden="true">
+            <defs>
+              <clipPath id="bottleFillClip">
+                <path d="M76,96 C76,88 78,84 86,84 L134,84 C142,84 144,88 144,96 L150,140 C158,150 162,168 162,190 L162,296 C162,308 154,316 142,316 L78,316 C66,316 58,308 58,296 L58,190 C58,168 62,150 70,140 Z"></path>
+              </clipPath>
+            </defs>
+            <g class="bottle-scale" id="bottleScale"></g>
+            <path class="bottle-outline" d="M96,18 C96,8 100,2 110,2 C120,2 124,8 124,18 L124,40 L96,40 Z"></path>
+            <rect class="bottle-collar" x="90" y="40" width="40" height="14" rx="6"></rect>
+            <path class="bottle-neck" d="M86,54 L134,54 L138,84 L82,84 Z"></path>
+            <path class="bottle-body" d="M76,84 C76,84 78,84 86,84 L134,84 C142,84 144,84 144,84 L150,140 C158,150 162,168 162,190 L162,296 C162,308 154,316 142,316 L78,316 C66,316 58,308 58,296 L58,190 C58,168 62,150 70,140 Z"></path>
+            <g id="bottleBands" clip-path="url(#bottleFillClip)"></g>
+            <path class="bottle-outline-top" d="M76,84 C76,84 78,84 86,84 L134,84 C142,84 144,84 144,84 L150,140 C158,150 162,168 162,190 L162,296 C162,308 154,316 142,316 L78,316 C66,316 58,308 58,296 L58,190 C58,168 62,150 70,140 Z"></path>
+          </svg>
+          <ul class="bottle-info" id="bottleInfo"></ul>
         </div>
       </div>
 
@@ -1361,7 +1389,7 @@
   renderGrid();
   renderDataTable();
 
-  (function initRatingChart() {
+  (function initScoreVisuals() {
     const chart = document.getElementById("ratingChart");
     const labelsWrap = document.getElementById("ratingChartLabels");
     if (!chart || !labelsWrap) return;
@@ -1371,7 +1399,6 @@
       { pct: 30, label: "Unabhängiges Testurteil", sub: "Stiftung Warentest / Öko-Test Schulnote", color: "var(--gold)" },
       { pct: 10, label: "Bewertungsvolumen", sub: "Verlässlichkeit durch Bewertungsanzahl", color: "var(--silver)" }
     ];
-
     const segEls = Array.from(chart.querySelectorAll(".seg"));
     const r = 84;
     const C = 2 * Math.PI * r;
@@ -1409,6 +1436,68 @@
       cursor += frac;
     });
 
+    const SVGNS = "http://www.w3.org/2000/svg";
+    const bottleBandsEl = document.getElementById("bottleBands");
+    const bottleScaleEl = document.getElementById("bottleScale");
+    const bottleInfoEl = document.getElementById("bottleInfo");
+    const bottleBandEls = [];
+    const bottleInfoEls = [];
+
+    if (bottleBandsEl && bottleScaleEl && bottleInfoEl) {
+      const liquidTop = 96, liquidBottom = 316, liquidH = liquidBottom - liquidTop;
+      const xLeft = 58, bandW = 104;
+
+      [0, 25, 50, 75, 100].forEach(mark => {
+        const y = liquidBottom - (mark / 100) * liquidH;
+        const line = document.createElementNS(SVGNS, "line");
+        line.setAttribute("x1", "40");
+        line.setAttribute("x2", "50");
+        line.setAttribute("y1", String(y));
+        line.setAttribute("y2", String(y));
+        bottleScaleEl.appendChild(line);
+      });
+
+      bottleBandsEl.innerHTML = "";
+      bottleInfoEl.innerHTML = "";
+      let fromBottom = 0;
+      weights.forEach((w, i) => {
+        const frac = w.pct / 100;
+        const bandBottomY = liquidBottom - fromBottom * liquidH;
+        const bandTopY = bandBottomY - frac * liquidH;
+
+        const rect = document.createElementNS(SVGNS, "rect");
+        rect.setAttribute("x", String(xLeft));
+        rect.setAttribute("y", String(bandTopY));
+        rect.setAttribute("width", String(bandW));
+        rect.setAttribute("height", String(bandBottomY - bandTopY));
+        rect.setAttribute("class", "bottle-band");
+        rect.dataset.seg = String(i);
+        rect.style.fill = w.color;
+        rect.tabIndex = 0;
+        bottleBandsEl.appendChild(rect);
+        bottleBandEls.push(rect);
+
+        if (i > 0) {
+          const sep = document.createElementNS(SVGNS, "rect");
+          sep.setAttribute("x", String(xLeft));
+          sep.setAttribute("y", String(bandBottomY - 1));
+          sep.setAttribute("width", String(bandW));
+          sep.setAttribute("height", "2");
+          sep.setAttribute("class", "bottle-band-sep");
+          bottleBandsEl.appendChild(sep);
+        }
+
+        const li = document.createElement("li");
+        li.dataset.seg = String(i);
+        li.tabIndex = 0;
+        li.innerHTML = `<span class="dot" style="background:${w.color}"></span><div><strong>${w.pct} % ${w.label}</strong><small>${w.sub}</small></div>`;
+        bottleInfoEl.appendChild(li);
+        bottleInfoEls.push(li);
+
+        fromBottom += frac;
+      });
+    }
+
     function positionLabels() {
       if (window.innerWidth <= 640) {
         labelEls.forEach(l => { l.style.left = ""; l.style.top = ""; });
@@ -1432,20 +1521,19 @@
       ratingResizeTimer = setTimeout(positionLabels, 120);
     });
 
+    const allGroups = [segEls, labelEls, bottleBandEls, bottleInfoEls];
+
     function setActive(i) {
-      segEls.forEach(s => {
-        const active = i === null || s.dataset.seg === String(i);
-        s.classList.toggle("is-active", i !== null && s.dataset.seg === String(i));
-        s.classList.toggle("is-dim", i !== null && !active);
-      });
-      labelEls.forEach(l => {
-        const active = i === null || l.dataset.seg === String(i);
-        l.classList.toggle("is-active", i !== null && l.dataset.seg === String(i));
-        l.classList.toggle("is-dim", i !== null && !active);
+      allGroups.forEach(group => {
+        group.forEach(el => {
+          const isMatch = i !== null && el.dataset.seg === String(i);
+          el.classList.toggle("is-active", isMatch);
+          el.classList.toggle("is-dim", i !== null && !isMatch);
+        });
       });
     }
 
-    [...segEls, ...labelEls].forEach(el => {
+    [...segEls, ...labelEls, ...bottleBandEls, ...bottleInfoEls].forEach(el => {
       const idx = el.dataset.seg;
       el.addEventListener("mouseenter", () => setActive(idx));
       el.addEventListener("mouseleave", () => setActive(null));
