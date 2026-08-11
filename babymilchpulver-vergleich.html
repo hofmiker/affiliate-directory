@@ -305,9 +305,21 @@
   .card-media {
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 18px 0 14px;
+    min-height: 96px;
   }
   .card-media svg { width: 96px; height: 96px; display: block; }
+  .card-media .product-photo {
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    border-radius: 18px;
+    background: #fff;
+    padding: 10px;
+    box-shadow: var(--inset-shadow);
+  }
+  .card-media .media-fallback { display: none; align-items: center; justify-content: center; }
 
   .card-top {
     display: flex;
@@ -490,7 +502,7 @@
   </main>
 
   <footer>
-    <p>Wichtiger Hinweis: Dieser Vergleich ersetzt keine medizinische Beratung. Welche Anfangsmilch für Ihr Baby geeignet ist, besprechen Sie bitte mit Ihrer Kinderärztin oder Ihrem Kinderarzt. Punktzahlen sind auf Basis öffentlich zugänglicher Kundenbewertungen und Testergebnisse recherchierte Richtwerte (keine live ausgelesenen Shop-Daten) und können sich ändern. Preisangaben sind ungefähre Richtwerte einzelner Angebote zum Recherchezeitpunkt. Diese Seite kann Affiliate-/Partnerlinks enthalten.</p>
+    <p>Wichtiger Hinweis: Dieser Vergleich ersetzt keine medizinische Beratung. Welche Anfangsmilch für Ihr Baby geeignet ist, besprechen Sie bitte mit Ihrer Kinderärztin oder Ihrem Kinderarzt. Punktzahlen sind auf Basis öffentlich zugänglicher Kundenbewertungen und Testergebnisse recherchierte Richtwerte (keine live ausgelesenen Shop-Daten) und können sich ändern. Preisangaben sind ungefähre Richtwerte einzelner Angebote zum Recherchezeitpunkt. Die Markenbilder werden extern per Logo-Dienst des jeweiligen Herstellerdomains geladen; kann ein Bild nicht geladen werden, erscheint automatisch eine illustrierte Ersatzgrafik. Diese Seite kann Affiliate-/Partnerlinks enthalten.</p>
     <p class="sources">Quellen u. a.: <a href="https://www.dm.de" target="_blank" rel="noopener noreferrer nofollow">dm.de</a>, <a href="https://www.amazon.de" target="_blank" rel="noopener noreferrer nofollow">Amazon.de</a>, <a href="https://www.rossmann.de" target="_blank" rel="noopener noreferrer nofollow">Rossmann.de</a>, <a href="https://www.idealo.de" target="_blank" rel="noopener noreferrer nofollow">idealo.de</a>, <a href="https://www.geizhals.de" target="_blank" rel="noopener noreferrer nofollow">Geizhals.de</a>, <a href="https://www.test.de" target="_blank" rel="noopener noreferrer nofollow">Stiftung Warentest</a>, <a href="https://www.testberichte.de" target="_blank" rel="noopener noreferrer nofollow">Testberichte.de</a>.</p>
   </footer>
 </div>
@@ -507,7 +519,8 @@
       reviewsTier: 10, reviewsLabel: "sehr hohes Bewertungsvolumen",
       testGrade: 2.1, testLabel: "gut (2,1)",
       price: "ca. 16,25 € / 600 g",
-      url: "https://www.dm.de/hipp-anfangsmilch-pre-combiotik-von-geburt-an-p4062300398894.html"
+      url: "https://www.dm.de/hipp-anfangsmilch-pre-combiotik-von-geburt-an-p4062300398894.html",
+      photo: "https://logo.clearbit.com/hipp.de?size=200"
     },
     {
       name: "Nestlé Beba Pre",
@@ -519,7 +532,8 @@
       reviewsTier: 7.5, reviewsLabel: "gutes Bewertungsvolumen",
       testGrade: 2.4, testLabel: "gut (2,4)",
       price: "ca. 14–16 € / 800 g",
-      url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html"
+      url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html",
+      photo: "https://logo.clearbit.com/nestle.de?size=200"
     },
     {
       name: "Humana Pre",
@@ -531,7 +545,8 @@
       reviewsTier: 7.5, reviewsLabel: "gutes Bewertungsvolumen",
       testGrade: 1.8, testLabel: "gut (1,8)",
       price: "ca. 13–15 € / 750 g",
-      url: "https://www.dm.de/p/d/1682140/humana-anfangsmilch-pre-von-geburt-an"
+      url: "https://www.dm.de/p/d/1682140/humana-anfangsmilch-pre-von-geburt-an",
+      photo: "https://logo.clearbit.com/humana.de?size=200"
     },
     {
       name: "Milupa Milumil Pre",
@@ -543,7 +558,8 @@
       reviewsTier: 7.5, reviewsLabel: "gutes Bewertungsvolumen",
       testGrade: 2.0, testLabel: "gut (2,0)",
       price: "ca. 12–14 € / 800 g",
-      url: "https://www.dm.de/milupa-anfangsmilch-pre-milumil-von-geburt-an-p4008976032892.html"
+      url: "https://www.dm.de/milupa-anfangsmilch-pre-milumil-von-geburt-an-p4008976032892.html",
+      photo: "https://logo.clearbit.com/milupa.de?size=200"
     },
     {
       name: "Töpfer Bio Lactana Pre",
@@ -555,7 +571,8 @@
       reviewsTier: 5, reviewsLabel: "mittleres Bewertungsvolumen",
       testGrade: 2.2, testLabel: "gut (2,2)",
       price: "ca. 15–17 € / 600 g",
-      url: "https://www.dm.de/p/d/3105160/toepfer-anfangsmilch-pre-von-geburt-an"
+      url: "https://www.dm.de/p/d/3105160/toepfer-anfangsmilch-pre-von-geburt-an",
+      photo: "https://logo.clearbit.com/toepfer-babynahrung.de?size=200"
     },
     {
       name: "Aptamil Pronutra Pre",
@@ -567,7 +584,8 @@
       reviewsTier: 10, reviewsLabel: "sehr hohes Bewertungsvolumen",
       testGrade: 3.1, testLabel: "befriedigend (3,1)",
       price: "ab ca. 17,90 € / 800 g",
-      url: "https://www.dm.de/anfangsmilch-pre-pronutra-von-geburt-an-p4056631001202.html"
+      url: "https://www.dm.de/anfangsmilch-pre-pronutra-von-geburt-an-p4056631001202.html",
+      photo: "https://logo.clearbit.com/aptamil.de?size=200"
     },
     {
       name: "Holle Bio Pre",
@@ -579,7 +597,8 @@
       reviewsTier: 7.5, reviewsLabel: "gutes Bewertungsvolumen",
       testGrade: 2.5, testLabel: "gut (2,5)",
       price: "ab ca. 6,79 € / 400 g",
-      url: "https://www.dm.de/anfangsmilch-pre-von-geburt-an-p7640161879829.html"
+      url: "https://www.dm.de/anfangsmilch-pre-von-geburt-an-p7640161879829.html",
+      photo: "https://logo.clearbit.com/holle.ch?size=200"
     },
     {
       name: "babylove Pre (dm)",
@@ -591,7 +610,8 @@
       reviewsTier: 7.5, reviewsLabel: "gutes Bewertungsvolumen",
       testGrade: 2.3, testLabel: "gut (2,3)",
       price: "günstige Eigenmarke, ca. 8–9 € / 500 g",
-      url: "https://www.dm.de/babylove-anfangsmilch-pre-von-geburt-an-p4066447175721.html"
+      url: "https://www.dm.de/babylove-anfangsmilch-pre-von-geburt-an-p4066447175721.html",
+      photo: "https://logo.clearbit.com/dm.de?size=200"
     },
     {
       name: "Bebivita Pre",
@@ -603,7 +623,8 @@
       reviewsTier: 7.5, reviewsLabel: "gutes Bewertungsvolumen",
       testGrade: 1.9, testLabel: "gut (1,9)",
       price: "ab ca. 6,45 € / 500 g",
-      url: "https://geizhals.de/bebivita-pre-anfangsmilch-pulver-a1468674.html"
+      url: "https://geizhals.de/bebivita-pre-anfangsmilch-pulver-a1468674.html",
+      photo: "https://logo.clearbit.com/bebivita.de?size=200"
     },
     {
       name: "Babydream Pre (Rossmann)",
@@ -615,7 +636,8 @@
       reviewsTier: 5, reviewsLabel: "mittleres Bewertungsvolumen",
       testGrade: 2.3, testLabel: "gut (2,3)",
       price: "günstige Eigenmarke, ca. 8–9 € / 600 g",
-      url: "https://www.rossmann.de/de/baby-und-spielzeug-babydream-anfangsmilch-pre-von-geburt-an/p/4305615852218"
+      url: "https://www.rossmann.de/de/baby-und-spielzeug-babydream-anfangsmilch-pre-von-geburt-an/p/4305615852218",
+      photo: "https://logo.clearbit.com/rossmann.de?size=200"
     }
   ];
 
@@ -677,7 +699,10 @@
     const rankClass = p.rank === 1 ? "r1" : p.rank === 2 ? "r2" : p.rank === 3 ? "r3" : "";
     return `
       <div class="rank-badge ${rankClass}">#${p.rank}</div>
-      <div class="card-media">${tinSvg(p)}</div>
+      <div class="card-media">
+        <img class="product-photo" src="${p.photo}" alt="${p.name} Markenbild" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="media-fallback">${tinSvg(p)}</div>
+      </div>
       <div class="card-top">
         <p class="eyebrow">${p.category}</p>
         <p class="price-tag">${p.price}</p>
