@@ -825,7 +825,7 @@
       prov: {
         shop: { status: "real", sources: [{ url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html", label: "dm.de" }], note: "4,92 ★ bei 89 Bewertungen (dm.de-Suchergebnis zur 1,2-kg-Packung)." },
         test: { status: "est", note: "Keine konkrete Stiftung-Warentest-/Öko-Test-Note gefunden – eigene Einschätzung." },
-        reviews: { status: "converted", sources: [{ url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html", label: "dm.de" }], note: "Basis: 89 reale Bewertungen bei dm.de, hier vereinfacht in eine Kategorie von 1–10 übersetzt." }
+        reviews: { status: "converted", count: 89, sources: [{ url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html", label: "dm.de" }], note: "89 reale Bewertungen bei dm.de – in der Punktzahl als Kategorie 7,5/10 gewertet." }
       }
     },
     {
@@ -1231,7 +1231,10 @@
     const rows = products.map(p => {
       const shopCell = provCellHtml(p.prov.shop, `${p.shopRating.toFixed(2)} ★`);
       const testCell = provCellHtml(p.prov.test, p.testLabel);
-      const reviewsCell = provCellHtml(p.prov.reviews, `${p.reviewsTier}/10`);
+      const reviewsDisplay = p.prov.reviews.count != null
+        ? `${p.prov.reviews.count} Bewertungen`
+        : `${p.reviewsTier}/10`;
+      const reviewsCell = provCellHtml(p.prov.reviews, reviewsDisplay);
       return `<tr>
         <td class="product-cell">#${p.rank} ${p.name}</td>
         ${shopCell}
