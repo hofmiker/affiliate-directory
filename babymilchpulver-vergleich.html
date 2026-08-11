@@ -28,12 +28,12 @@
     :root {
       --bg: #171113;
       --fg: #ecebe4;
-      --muted: #a89f83;
-      --border: #3d3220;
-      --card-bg: #2a2318;
-      --accent: #b8860b;
-      --accent-fg: #241a04;
-      --chip-bg: #332a1a;
+      --muted: #a19c97;
+      --border: #3a3636;
+      --card-bg: #211f1f;
+      --accent: #f193c1;
+      --accent-fg: #2a0f1c;
+      --chip-bg: #2b2929;
       --gold: #e0b04b;
       --silver: #a7ab9f;
       --bronze: #c9814f;
@@ -51,8 +51,8 @@
     --tile-shadow-hover: 0 2px 4px rgba(30, 22, 10, 0.1), 0 20px 38px -14px rgba(30, 22, 10, 0.42);
   }
   :root[data-theme="dark"] {
-    --bg: #171113; --fg: #ecebe4; --muted: #a89f83; --border: #3d3220;
-    --card-bg: #2a2318; --accent: #b8860b; --accent-fg: #241a04; --chip-bg: #332a1a;
+    --bg: #171113; --fg: #ecebe4; --muted: #a19c97; --border: #3a3636;
+    --card-bg: #211f1f; --accent: #f193c1; --accent-fg: #2a0f1c; --chip-bg: #2b2929;
     --gold: #e0b04b; --silver: #a7ab9f; --bronze: #c9814f;
     --inset-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
     --tile-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 14px 30px -12px rgba(0, 0, 0, 0.55);
@@ -583,6 +583,98 @@
     font-size: 0.9rem;
   }
 
+  .transparency {
+    margin: 44px 0 0;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+  }
+  .transparency h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 1vw + 1.2rem, 1.75rem);
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  .transparency > p {
+    color: var(--muted);
+    font-size: 0.86rem;
+    max-width: 760px;
+    margin: 0 0 16px;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 0 0 18px;
+    font-size: 0.78rem;
+  }
+  .legend li { display: flex; align-items: center; gap: 7px; list-style: none; }
+  .legend { padding: 0; margin-left: 0; }
+
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .status-chip.real { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+  .status-chip.converted { background: color-mix(in srgb, var(--gold) 20%, transparent); color: var(--gold); }
+  .status-chip.est { background: var(--chip-bg); color: var(--muted); }
+
+  .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--card-bg);
+    box-shadow: var(--tile-shadow);
+  }
+  table.data-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 880px;
+    font-size: 0.82rem;
+  }
+  table.data-table th,
+  table.data-table td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  table.data-table th {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    font-weight: 700;
+    background: var(--chip-bg);
+    position: sticky;
+    top: 0;
+  }
+  table.data-table tr:last-child td { border-bottom: none; }
+  table.data-table .product-cell { font-weight: 700; white-space: nowrap; }
+  table.data-table .val { font-variant-numeric: tabular-nums; font-weight: 700; margin-right: 6px; }
+  table.data-table .cell-est { color: var(--muted); }
+  table.data-table .cell-est .val { color: var(--muted); font-weight: 600; }
+  table.data-table .note {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.74rem;
+    color: var(--muted);
+    max-width: 260px;
+  }
+  table.data-table .src-link {
+    display: inline-block;
+    margin-top: 3px;
+    font-size: 0.74rem;
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
   footer {
     padding: 20px 0 56px;
     border-top: 1px solid var(--border);
@@ -667,6 +759,29 @@
     <p id="count"></p>
     <div class="grid" id="grid"></div>
     <div class="empty" id="empty">Keine Treffer für diese Suche.</div>
+
+    <div class="transparency">
+      <h2>Datengrundlage: was ist belegt, was ist geschätzt?</h2>
+      <p>Diese Seite wurde per Recherche zusammengestellt, nicht per Live-Anbindung an Shop-APIs. Nicht für jeden Wert gab es eine konkrete, öffentlich auffindbare Zahl. Die Tabelle zeigt für jedes Produkt offen, welcher Wert belegt ist (mit Quelle), welcher aus einer echten Zahl umgerechnet wurde, und welcher eine eigene Einschätzung ohne konkrete Quelle ist.</p>
+      <ul class="legend">
+        <li><span class="status-chip real">Belegt</span> konkrete Zahl mit Quelle gefunden</li>
+        <li><span class="status-chip converted">Umgerechnet</span> reale Quelle, aber selbst in Sterne/Schulnote übertragen</li>
+        <li><span class="status-chip est">Geschätzt</span> keine konkrete Quelle gefunden, eigene Einschätzung</li>
+      </ul>
+      <div class="table-scroll">
+        <table class="data-table" id="dataTable">
+          <thead>
+            <tr>
+              <th>Produkt</th>
+              <th>Shop-Bewertung (verwendet)</th>
+              <th>Testurteil (verwendet)</th>
+              <th>Bewertungsvolumen</th>
+            </tr>
+          </thead>
+          <tbody id="dataTableBody"></tbody>
+        </table>
+      </div>
+    </div>
   </main>
 
   <footer>
@@ -688,7 +803,11 @@
       testGrade: 2.1, testLabel: "gut (2,1)",
       price: "ca. 16,25 € / 600 g",
       url: "https://www.dm.de/hipp-anfangsmilch-pre-combiotik-von-geburt-an-p4062300398894.html",
-      photo: "https://logo.clearbit.com/hipp.de?size=200"
+      photo: "https://logo.clearbit.com/hipp.de?size=200",
+      prov: {
+        shop: { status: "est", note: "Keine konkrete Sterne-Zahl gefunden – eigene Einschätzung auf Basis durchgehend sehr positiver Rezensionen." },
+        test: { status: "est", note: "Keine konkrete Testnote gefunden – eigene Einschätzung." }
+      }
     },
     {
       name: "Nestlé Beba Pre",
@@ -701,7 +820,11 @@
       testGrade: 2.4, testLabel: "gut (2,4)",
       price: "ca. 14–16 € / 800 g",
       url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html",
-      photo: "https://logo.clearbit.com/nestle.de?size=200"
+      photo: "https://logo.clearbit.com/nestle.de?size=200",
+      prov: {
+        shop: { status: "real", url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html", label: "dm.de", note: "4,92 ★ bei 89 Bewertungen (dm.de-Suchergebnis zur 1,2-kg-Packung)." },
+        test: { status: "est", note: "Keine konkrete Stiftung-Warentest-/Öko-Test-Note gefunden – eigene Einschätzung." }
+      }
     },
     {
       name: "Humana Pre",
@@ -714,7 +837,11 @@
       testGrade: 1.8, testLabel: "gut (1,8)",
       price: "ca. 13–15 € / 750 g",
       url: "https://www.dm.de/p/d/1682140/humana-anfangsmilch-pre-von-geburt-an",
-      photo: "https://logo.clearbit.com/humana.de?size=200"
+      photo: "https://logo.clearbit.com/humana.de?size=200",
+      prov: {
+        shop: { status: "est", note: "Keine konkrete Sterne-Zahl gefunden – eigene Einschätzung." },
+        test: { status: "real", url: "https://www.testberichte.de/p/humana-tests/anfangsmilch-pre-testbericht.html", label: "testberichte.de", note: "Aggregierte Note 1,8 (gut); zusätzlich Öko-Test „sehr gut“ (11/2024) und Stiftung Warentest „gut“ (10/2025) laut humana-experten.de." }
+      }
     },
     {
       name: "Milupa Milumil Pre",
@@ -727,7 +854,11 @@
       testGrade: 2.0, testLabel: "gut (2,0)",
       price: "ca. 12–14 € / 800 g",
       url: "https://www.dm.de/milupa-anfangsmilch-pre-milumil-von-geburt-an-p4008976032892.html",
-      photo: "https://logo.clearbit.com/milupa.de?size=200"
+      photo: "https://logo.clearbit.com/milupa.de?size=200",
+      prov: {
+        shop: { status: "est", note: "Keine konkrete Sterne-Zahl gefunden – eigene Einschätzung." },
+        test: { status: "real", url: "https://www.testberichte.de/p/milupa-tests/milumil-anfangsmilch-pre-testbericht.html", label: "testberichte.de", note: "Aggregierte Note 2,0 (gut)." }
+      }
     },
     {
       name: "Töpfer Bio Lactana Pre",
@@ -740,7 +871,11 @@
       testGrade: 2.2, testLabel: "gut (2,2)",
       price: "ca. 15–17 € / 600 g",
       url: "https://www.dm.de/p/d/3105160/toepfer-anfangsmilch-pre-von-geburt-an",
-      photo: "https://logo.clearbit.com/toepfer-babynahrung.de?size=200"
+      photo: "https://logo.clearbit.com/toepfer-babynahrung.de?size=200",
+      prov: {
+        shop: { status: "est", note: "Keine aggregierte Sterne-Zahl gefunden, nur einzelne 5-Sterne-Rezensionen auf dm.de – eigene Einschätzung." },
+        test: { status: "real", url: "https://www.testberichte.de/p/toepfer-tests/lactana-bio-anfangsmilch-pre-testbericht.html", label: "testberichte.de", note: "Aggregierte Note 2,2 (gut)." }
+      }
     },
     {
       name: "Aptamil Pronutra Pre",
@@ -753,7 +888,11 @@
       testGrade: 3.1, testLabel: "befriedigend (3,1)",
       price: "ab ca. 17,90 € / 800 g",
       url: "https://www.dm.de/anfangsmilch-pre-pronutra-von-geburt-an-p4056631001202.html",
-      photo: "https://logo.clearbit.com/aptamil.de?size=200"
+      photo: "https://logo.clearbit.com/aptamil.de?size=200",
+      prov: {
+        shop: { status: "real", url: "https://www.dm.de/anfangsmilch-pre-pronutra-von-geburt-an-p4056631001202.html", label: "dm.de", note: "4,7 ★ laut dm.de-Produktseite (zuletzt vermehrt kritische Rezensionen wegen Rezepturumstellung/Schaumbildung)." },
+        test: { status: "converted", url: "https://www.testbericht.de/produkte/aptamil-pre-anfangsmilch-800-g", label: "testbericht.de", note: "Realer Wert 68/100 („befriedigend“); die Schulnote 3,1 ist meine Umrechnung, keine Originalnote." }
+      }
     },
     {
       name: "Holle Bio Pre",
@@ -766,7 +905,11 @@
       testGrade: 2.5, testLabel: "gut (2,5)",
       price: "ab ca. 6,79 € / 400 g",
       url: "https://www.dm.de/anfangsmilch-pre-von-geburt-an-p7640161879829.html",
-      photo: "https://logo.clearbit.com/holle.ch?size=200"
+      photo: "https://logo.clearbit.com/holle.ch?size=200",
+      prov: {
+        shop: { status: "est", note: "Keine konkrete Shop-Sterne-Zahl gefunden – eigene Einschätzung." },
+        test: { status: "real", url: "https://www.holle.ch/ueber-uns/aktuelles/bio-anfangsmilch-pre-in-stiftung-warentest/", label: "holle.ch (Stiftung Warentest)", note: "Stiftung Warentest: „gut“ (2,5)." }
+      }
     },
     {
       name: "babylove Pre (dm)",
@@ -779,7 +922,11 @@
       testGrade: 2.3, testLabel: "gut (2,3)",
       price: "günstige Eigenmarke, ca. 8–9 € / 500 g",
       url: "https://www.dm.de/babylove-anfangsmilch-pre-von-geburt-an-p4066447175721.html",
-      photo: "https://logo.clearbit.com/dm.de?size=200"
+      photo: "https://logo.clearbit.com/dm.de?size=200",
+      prov: {
+        shop: { status: "est", note: "Keine konkrete Shop-Sterne-Zahl gefunden – eigene Einschätzung." },
+        test: { status: "converted", url: "https://www.testbericht.de/produkte/dm-babylove-anfangsmilch-pre", label: "testbericht.de", note: "Realer Wert 82/100 („gut“); die Schulnote 2,3 ist meine Umrechnung, keine Originalnote." }
+      }
     },
     {
       name: "Bebivita Pre",
@@ -792,7 +939,11 @@
       testGrade: 1.9, testLabel: "gut (1,9)",
       price: "ab ca. 6,45 € / 500 g",
       url: "https://geizhals.de/bebivita-pre-anfangsmilch-pulver-a1468674.html",
-      photo: "https://logo.clearbit.com/bebivita.de?size=200"
+      photo: "https://logo.clearbit.com/bebivita.de?size=200",
+      prov: {
+        shop: { status: "converted", url: "https://www.amazon.de/Bebivita-Anfangsmilch-5er-Pack-500/product-reviews/B01N53KDGZ", label: "Amazon.de", note: "Werte je Gebinde widersprüchlich (z. B. 2,8 ★ bei 3.077 Rezensionen vs. 4,7 ★ bei 458); 4,15 ist mein gemittelter Schätzwert, keine Originalzahl." },
+        test: { status: "real", url: "https://www.testberichte.de/p/bebivita-tests/anfangsmilch-pre-testbericht.html", label: "testberichte.de", note: "Aggregierte Note 1,9 (gut)." }
+      }
     },
     {
       name: "Babydream Pre (Rossmann)",
@@ -805,7 +956,11 @@
       testGrade: 2.3, testLabel: "gut (2,3)",
       price: "günstige Eigenmarke, ca. 8–9 € / 600 g",
       url: "https://www.rossmann.de/de/baby-und-spielzeug-babydream-anfangsmilch-pre-von-geburt-an/p/4305615852218",
-      photo: "https://logo.clearbit.com/rossmann.de?size=200"
+      photo: "https://logo.clearbit.com/rossmann.de?size=200",
+      prov: {
+        shop: { status: "est", note: "Keine konkrete Shop-Sterne-Zahl gefunden – eigene Einschätzung." },
+        test: { status: "real", url: "https://www.test.de/Pre-Nahrung-im-Test-5032864-detail/330000036740!18/", label: "test.de (Stiftung Warentest)", note: "Stiftung Warentest: „gut“ (2,3), Platz 6 von 19 getesteten Produkten." }
+      }
     }
   ];
 
@@ -1022,8 +1177,45 @@
   searchEl.addEventListener("input", renderGrid);
   sortEl.addEventListener("change", renderGrid);
 
+  function statusChip(status) {
+    if (status === "real") return '<span class="status-chip real">Belegt</span>';
+    if (status === "converted") return '<span class="status-chip converted">Umgerechnet</span>';
+    return '<span class="status-chip est">Geschätzt</span>';
+  }
+
+  function provCellHtml(entry, displayValue) {
+    const isEst = entry.status === "est";
+    const valSpan = `<span class="val">${displayValue}</span>`;
+    const link = entry.url
+      ? `<a class="src-link" href="${entry.url}" target="_blank" rel="noopener noreferrer nofollow">${entry.label} ↗</a>`
+      : "";
+    const note = entry.note ? `<span class="note">${entry.note}</span>` : "";
+    return `<td class="${isEst ? "cell-est" : ""}">${valSpan}${statusChip(entry.status)}${link}${note}</td>`;
+  }
+
+  function renderDataTable() {
+    const tbody = document.getElementById("dataTableBody");
+    if (!tbody) return;
+    const rows = products.map(p => {
+      const shopCell = provCellHtml(p.prov.shop, `${p.shopRating.toFixed(2)} ★`);
+      const testCell = provCellHtml(p.prov.test, p.testLabel);
+      const reviewsNote = p.name === "Nestlé Beba Pre"
+        ? "Basis: 89 reale Bewertungen (dm.de), hier vereinfacht in eine Kategorie von 1–10 übersetzt."
+        : "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung.";
+      const reviewsCell = `<td class="cell-est"><span class="val">${p.reviewsTier}/10</span>${statusChip("est")}<span class="note">${reviewsNote}</span></td>`;
+      return `<tr>
+        <td class="product-cell">#${p.rank} ${p.name}</td>
+        ${shopCell}
+        ${testCell}
+        ${reviewsCell}
+      </tr>`;
+    });
+    tbody.innerHTML = rows.join("");
+  }
+
   renderTabs();
   renderGrid();
+  renderDataTable();
 
   (function initParallax() {
     const banner = document.getElementById("heroBanner");
