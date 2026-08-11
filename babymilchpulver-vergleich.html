@@ -9,14 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&family=Nunito:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #faf0d7;
+    --bg: #fdf6e7;
     --fg: #262015;
     --muted: #756c53;
-    --border: #e7dab3;
-    --card-bg: #fffbef;
+    --border: #efe1ba;
+    --card-bg: #fffefa;
     --accent: #ad2565;
     --accent-fg: #fff3f8;
-    --chip-bg: #f4e6c2;
+    --chip-bg: #f8ecc9;
     --gold: #b8862c;
     --silver: #7c8079;
     --bronze: #a15c33;
@@ -29,34 +29,34 @@
       --bg: #171113;
       --fg: #ecebe4;
       --muted: #a3968f;
-      --border: #2f2426;
-      --card-bg: #1e1618;
+      --border: #3c2d31;
+      --card-bg: #2b2023;
       --accent: #f193c1;
       --accent-fg: #2a0f1c;
-      --chip-bg: #241a1d;
+      --chip-bg: #33262a;
       --gold: #e0b04b;
       --silver: #a7ab9f;
       --bronze: #c9814f;
       --inset-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
-      --tile-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 14px 30px -12px rgba(0, 0, 0, 0.6);
-      --tile-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.04), 0 20px 40px -12px rgba(0, 0, 0, 0.7);
+      --tile-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 14px 30px -12px rgba(0, 0, 0, 0.55);
+      --tile-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.05), 0 20px 40px -12px rgba(0, 0, 0, 0.65);
     }
   }
   :root[data-theme="light"] {
-    --bg: #faf0d7; --fg: #262015; --muted: #756c53; --border: #e7dab3;
-    --card-bg: #fffbef; --accent: #ad2565; --accent-fg: #fff3f8; --chip-bg: #f4e6c2;
+    --bg: #fdf6e7; --fg: #262015; --muted: #756c53; --border: #efe1ba;
+    --card-bg: #fffefa; --accent: #ad2565; --accent-fg: #fff3f8; --chip-bg: #f8ecc9;
     --gold: #b8862c; --silver: #7c8079; --bronze: #a15c33;
     --inset-shadow: inset 0 1px 2px rgba(38, 32, 21, 0.07);
     --tile-shadow: 0 1px 2px rgba(30, 22, 10, 0.08), 0 14px 30px -14px rgba(30, 22, 10, 0.35);
     --tile-shadow-hover: 0 2px 4px rgba(30, 22, 10, 0.1), 0 20px 38px -14px rgba(30, 22, 10, 0.42);
   }
   :root[data-theme="dark"] {
-    --bg: #171113; --fg: #ecebe4; --muted: #a3968f; --border: #2f2426;
-    --card-bg: #1e1618; --accent: #f193c1; --accent-fg: #2a0f1c; --chip-bg: #241a1d;
+    --bg: #171113; --fg: #ecebe4; --muted: #a3968f; --border: #3c2d31;
+    --card-bg: #2b2023; --accent: #f193c1; --accent-fg: #2a0f1c; --chip-bg: #33262a;
     --gold: #e0b04b; --silver: #a7ab9f; --bronze: #c9814f;
     --inset-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
-    --tile-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 14px 30px -12px rgba(0, 0, 0, 0.6);
-    --tile-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.04), 0 20px 40px -12px rgba(0, 0, 0, 0.7);
+    --tile-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 14px 30px -12px rgba(0, 0, 0, 0.55);
+    --tile-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.05), 0 20px 40px -12px rgba(0, 0, 0, 0.65);
   }
 
   * { box-sizing: border-box; }
@@ -174,32 +174,77 @@
     font-size: 0.86rem;
     margin: 0 0 16px;
   }
-  .method-weights {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 14px;
+  .method-chart {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    flex-wrap: wrap;
   }
-  .weight-item {
-    background: var(--chip-bg);
-    border-radius: 12px;
-    padding: 12px 14px;
+  .ring {
+    position: relative;
+    flex-shrink: 0;
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: conic-gradient(
+      var(--accent) 0% 60%,
+      var(--gold) 60% 90%,
+      var(--silver) 90% 100%
+    );
   }
-  .weight-item .pct {
+  .ring::before {
+    content: "";
+    position: absolute;
+    inset: 17px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    box-shadow: var(--inset-shadow);
+  }
+  .ring-center {
+    position: relative;
+    z-index: 1;
     font-family: var(--font-display);
-    font-size: 1.6rem;
     font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 4px;
+    font-size: 0.95rem;
+    color: var(--fg);
   }
-  .weight-item .lbl {
-    font-size: 0.78rem;
+  .ring-legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1 1 220px;
+    min-width: 220px;
+  }
+  .ring-legend li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .ring-legend .dot {
+    width: 12px;
+    height: 12px;
+    margin-top: 4px;
+    border-radius: 50%;
+    background: var(--dot);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+  }
+  .ring-legend strong {
+    display: block;
+    font-size: 0.86rem;
     font-weight: 700;
-    margin-bottom: 2px;
   }
-  .weight-item .sub {
-    font-size: 0.74rem;
+  .ring-legend small {
+    display: block;
+    font-size: 0.76rem;
     color: var(--muted);
+    margin-top: 1px;
   }
 
   .controls {
@@ -585,22 +630,24 @@
   <div class="method">
     <h2>So berechnen wir die Punktzahl</h2>
     <p>Jedes Produkt erhält eine Gesamtpunktzahl von 0–100, zusammengesetzt aus drei Faktoren. Grundlage sind Kundenbewertungen von dm.de, Amazon.de, Rossmann.de, idealo.de und Geizhals.de sowie Testurteile von Stiftung Warentest und Öko-Test.</p>
-    <div class="method-weights">
-      <div class="weight-item">
-        <div class="pct">60 %</div>
-        <div class="lbl">Shop-Kundenbewertung</div>
-        <div class="sub">Ø Sterne (1–5) aus mehreren Online-Shops</div>
+    <div class="method-chart">
+      <div class="ring" role="img" aria-label="Ringdiagramm: 60 Prozent Shop-Kundenbewertung, 30 Prozent unabhängiges Testurteil, 10 Prozent Bewertungsvolumen">
+        <span class="ring-center">100&nbsp;%</span>
       </div>
-      <div class="weight-item">
-        <div class="pct">30 %</div>
-        <div class="lbl">Unabhängiges Testurteil</div>
-        <div class="sub">Stiftung Warentest / Öko-Test Schulnote</div>
-      </div>
-      <div class="weight-item">
-        <div class="pct">10 %</div>
-        <div class="lbl">Bewertungsvolumen</div>
-        <div class="sub">Verlässlichkeit durch Anzahl Bewertungen</div>
-      </div>
+      <ul class="ring-legend">
+        <li>
+          <span class="dot" style="--dot: var(--accent);"></span>
+          <div><strong>60 % Shop-Kundenbewertung</strong><small>Ø Sterne (1–5) aus mehreren Online-Shops</small></div>
+        </li>
+        <li>
+          <span class="dot" style="--dot: var(--gold);"></span>
+          <div><strong>30 % Unabhängiges Testurteil</strong><small>Stiftung Warentest / Öko-Test Schulnote</small></div>
+        </li>
+        <li>
+          <span class="dot" style="--dot: var(--silver);"></span>
+          <div><strong>10 % Bewertungsvolumen</strong><small>Verlässlichkeit durch Anzahl Bewertungen</small></div>
+        </li>
+      </ul>
     </div>
   </div>
 
