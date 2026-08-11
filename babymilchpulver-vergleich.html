@@ -203,14 +203,6 @@
     background: var(--card-bg);
     box-shadow: var(--inset-shadow);
   }
-  .ring-center {
-    position: relative;
-    z-index: 1;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--fg);
-  }
   .ring-legend {
     list-style: none;
     margin: 0;
@@ -652,28 +644,6 @@
   }
   .rating-chart-svg .seg.is-dim { opacity: 0.32; }
 
-  .rating-chart-center {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    pointer-events: none;
-  }
-  .rating-chart-center .big {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(1.5rem, 1.4vw + 1.1rem, 2rem);
-    line-height: 1;
-  }
-  .rating-chart-center .small {
-    font-size: 0.74rem;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
   .rating-chart-label {
     position: absolute;
     top: 0;
@@ -792,6 +762,14 @@
     color: var(--accent);
     text-decoration: underline;
   }
+  table.data-table .src-date {
+    display: inline-block;
+    margin: 3px 0 0 4px;
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  table.data-table .src-date::before { content: "· "; }
 
   footer {
     padding: 20px 0 56px;
@@ -837,9 +815,7 @@
     <h2>So berechnen wir die Punktzahl</h2>
     <p>Jedes Produkt erhält eine Gesamtpunktzahl von 0–100, zusammengesetzt aus drei Faktoren. Grundlage sind Kundenbewertungen von dm.de, Amazon.de, Rossmann.de, idealo.de und Geizhals.de sowie Testurteile von Stiftung Warentest und Öko-Test.</p>
     <div class="method-chart">
-      <div class="ring" role="img" aria-label="Ringdiagramm: 60 Prozent Shop-Kundenbewertung, 30 Prozent unabhängiges Testurteil, 10 Prozent Bewertungsvolumen">
-        <span class="ring-center">100&nbsp;%</span>
-      </div>
+      <div class="ring" role="img" aria-label="Ringdiagramm: 60 Prozent Shop-Kundenbewertung, 30 Prozent unabhängiges Testurteil, 10 Prozent Bewertungsvolumen"></div>
       <ul class="ring-legend">
         <li>
           <span class="dot" style="--dot: var(--accent);"></span>
@@ -896,10 +872,6 @@
               <circle class="seg" data-seg="1" cx="110" cy="110" r="84"></circle>
               <circle class="seg" data-seg="2" cx="110" cy="110" r="84"></circle>
             </svg>
-            <div class="rating-chart-center">
-              <span class="big">100&nbsp;%</span>
-              <span class="small">Gesamtscore</span>
-            </div>
           </div>
           <div class="rating-chart-labels" id="ratingChartLabels"></div>
         </div>
@@ -970,7 +942,7 @@
       maker: "Humana",
       category: "Standard",
       color: "#F5A623",
-      desc: "An Muttermilch angelehnte Rezeptur. Aktuell mit „sehr gut“ bei Öko-Test (11/2024) und „gut“ bei Stiftung Warentest (10/2025) bewertet.",
+      desc: "An Muttermilch angelehnte Rezeptur. Bei Öko-Test 11/2024 mit „sehr gut“ bewertet, im testberichte.de-Schnitt „gut“ (1,8).",
       shopRating: 4.6,
       reviewsTier: 7.5, reviewsLabel: "gutes Bewertungsvolumen",
       testGrade: 1.8, testLabel: "gut (1,8)",
@@ -982,10 +954,10 @@
         test: {
           status: "real",
           sources: [
-            { url: "https://www.testberichte.de/p/humana-tests/anfangsmilch-pre-testbericht.html", label: "testberichte.de" },
-            { url: "https://www.humana-experten.de/qualitaetsversprechen/humana-qualitaet-babynahrung-im-test", label: "humana-experten.de" }
+            { url: "https://www.testberichte.de/p/humana-tests/anfangsmilch-pre-testbericht.html", label: "testberichte.de", date: "laufend aktualisiert" },
+            { url: "https://www.testbericht.de/de/vergleich/oeko-test-9098.html", label: "testbericht.de (Öko-Test-Übersicht)", date: "11/2024" }
           ],
-          note: "Aggregierte Note 1,8 (gut) laut testberichte.de; zusätzlich Öko-Test „sehr gut“ (11/2024) und Stiftung Warentest „gut“ (10/2025) laut humana-experten.de."
+          note: "Aggregierte Note 1,8 (gut) laut testberichte.de; zusätzlich „sehr gut“ bei Öko-Test 11/2024 laut testbericht.de-Übersicht. Hinweis: humana-experten.de nennt dieselben Noten, ist aber eine Marken-eigene Seite von Humana selbst – kein unabhängiges Institut, daher hier nicht als Beleg gezählt."
         },
         reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
@@ -1061,10 +1033,10 @@
         test: {
           status: "real",
           sources: [
-            { url: "https://www.test.de/Pre-Nahrung-im-Test-5032864-detail/330000036740!11/", label: "test.de" },
+            { url: "https://www.test.de/Pre-Nahrung-im-Test-5032864-detail/330000036740!11/", label: "test.de", date: "09/2022" },
             { url: "https://www.holle.ch/ueber-uns/aktuelles/bio-anfangsmilch-pre-in-stiftung-warentest/", label: "holle.ch" }
           ],
-          note: "Stiftung Warentest: „gut“ (2,5)."
+          note: "Stiftung Warentest, Test „Pre-Nahrung im Test“ (Herbst 2022, 21 Produkte): „gut“ (2,5)."
         },
         reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
@@ -1122,10 +1094,10 @@
         test: {
           status: "real",
           sources: [
-            { url: "https://www.test.de/Pre-Nahrung-im-Test-5032864-detail/330000036740!18/", label: "test.de" },
+            { url: "https://www.test.de/Pre-Nahrung-im-Test-5032864-detail/330000036740!18/", label: "test.de", date: "09/2022" },
             { url: "https://www.rossmann.de/unternehmen/presse/babydream-anfangsmilch-pre.html", label: "rossmann.de (Öko-Test)" }
           ],
-          note: "Stiftung Warentest: „gut“ (2,3), Platz 6 von 19 getesteten Produkten; zusätzlich Öko-Test-Detailwerte (u. a. Schadstoffe 3,0) laut Rossmann-Pressemitteilung."
+          note: "Stiftung Warentest, Test „Pre-Nahrung im Test“ (Herbst 2022): „gut“ (2,3); Rossmann selbst nennt Platz 6 von 19 getesteten Produkten (die Gesamtstudie umfasste 21 Produkte, die genaue Teilkategorie ließ sich nicht abschließend klären). Zusätzlich Öko-Test-Detailwerte (u. a. Schadstoffe 3,0) laut Rossmann-Pressemitteilung."
         },
         reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
@@ -1356,7 +1328,10 @@
     const valSpan = `<span class="val">${displayValue}</span>`;
     const sources = entry.sources || [];
     const links = sources
-      .map(s => `<a class="src-link" href="${s.url}" target="_blank" rel="noopener noreferrer nofollow">${s.label} ↗</a>`)
+      .map(s => {
+        const dateTag = s.date ? `<span class="src-date">${s.date}</span>` : "";
+        return `<a class="src-link" href="${s.url}" target="_blank" rel="noopener noreferrer nofollow">${s.label} ↗</a>${dateTag}`;
+      })
       .join(" ");
     const note = entry.note ? `<span class="note">${entry.note}</span>` : "";
     return `<td class="${isEst ? "cell-est" : ""}">${valSpan}${statusChip(entry.status)}${links}${note}</td>`;
