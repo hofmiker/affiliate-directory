@@ -806,7 +806,8 @@
       photo: "https://logo.clearbit.com/hipp.de?size=200",
       prov: {
         shop: { status: "est", note: "Keine konkrete Sterne-Zahl gefunden – eigene Einschätzung auf Basis durchgehend sehr positiver Rezensionen." },
-        test: { status: "est", note: "Keine konkrete Testnote gefunden – eigene Einschätzung." }
+        test: { status: "est", note: "Keine konkrete Testnote gefunden – eigene Einschätzung." },
+        reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
     },
     {
@@ -822,8 +823,9 @@
       url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html",
       photo: "https://logo.clearbit.com/nestle.de?size=200",
       prov: {
-        shop: { status: "real", url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html", label: "dm.de", note: "4,92 ★ bei 89 Bewertungen (dm.de-Suchergebnis zur 1,2-kg-Packung)." },
-        test: { status: "est", note: "Keine konkrete Stiftung-Warentest-/Öko-Test-Note gefunden – eigene Einschätzung." }
+        shop: { status: "real", sources: [{ url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html", label: "dm.de" }], note: "4,92 ★ bei 89 Bewertungen (dm.de-Suchergebnis zur 1,2-kg-Packung)." },
+        test: { status: "est", note: "Keine konkrete Stiftung-Warentest-/Öko-Test-Note gefunden – eigene Einschätzung." },
+        reviews: { status: "converted", sources: [{ url: "https://www.dm.de/nestle-beba-anfangsmilch-pre-von-geburt-an-p7613038463582.html", label: "dm.de" }], note: "Basis: 89 reale Bewertungen bei dm.de, hier vereinfacht in eine Kategorie von 1–10 übersetzt." }
       }
     },
     {
@@ -840,7 +842,15 @@
       photo: "https://logo.clearbit.com/humana.de?size=200",
       prov: {
         shop: { status: "est", note: "Keine konkrete Sterne-Zahl gefunden – eigene Einschätzung." },
-        test: { status: "real", url: "https://www.testberichte.de/p/humana-tests/anfangsmilch-pre-testbericht.html", label: "testberichte.de", note: "Aggregierte Note 1,8 (gut); zusätzlich Öko-Test „sehr gut“ (11/2024) und Stiftung Warentest „gut“ (10/2025) laut humana-experten.de." }
+        test: {
+          status: "real",
+          sources: [
+            { url: "https://www.testberichte.de/p/humana-tests/anfangsmilch-pre-testbericht.html", label: "testberichte.de" },
+            { url: "https://www.humana-experten.de/qualitaetsversprechen/humana-qualitaet-babynahrung-im-test", label: "humana-experten.de" }
+          ],
+          note: "Aggregierte Note 1,8 (gut) laut testberichte.de; zusätzlich Öko-Test „sehr gut“ (11/2024) und Stiftung Warentest „gut“ (10/2025) laut humana-experten.de."
+        },
+        reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
     },
     {
@@ -857,7 +867,8 @@
       photo: "https://logo.clearbit.com/milupa.de?size=200",
       prov: {
         shop: { status: "est", note: "Keine konkrete Sterne-Zahl gefunden – eigene Einschätzung." },
-        test: { status: "real", url: "https://www.testberichte.de/p/milupa-tests/milumil-anfangsmilch-pre-testbericht.html", label: "testberichte.de", note: "Aggregierte Note 2,0 (gut)." }
+        test: { status: "real", sources: [{ url: "https://www.testberichte.de/p/milupa-tests/milumil-anfangsmilch-pre-testbericht.html", label: "testberichte.de" }], note: "Aggregierte Note 2,0 (gut)." },
+        reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
     },
     {
@@ -874,7 +885,8 @@
       photo: "https://logo.clearbit.com/toepfer-babynahrung.de?size=200",
       prov: {
         shop: { status: "est", note: "Keine aggregierte Sterne-Zahl gefunden, nur einzelne 5-Sterne-Rezensionen auf dm.de – eigene Einschätzung." },
-        test: { status: "real", url: "https://www.testberichte.de/p/toepfer-tests/lactana-bio-anfangsmilch-pre-testbericht.html", label: "testberichte.de", note: "Aggregierte Note 2,2 (gut)." }
+        test: { status: "real", sources: [{ url: "https://www.testberichte.de/p/toepfer-tests/lactana-bio-anfangsmilch-pre-testbericht.html", label: "testberichte.de" }], note: "Aggregierte Note 2,2 (gut)." },
+        reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
     },
     {
@@ -890,8 +902,9 @@
       url: "https://www.dm.de/anfangsmilch-pre-pronutra-von-geburt-an-p4056631001202.html",
       photo: "https://logo.clearbit.com/aptamil.de?size=200",
       prov: {
-        shop: { status: "real", url: "https://www.dm.de/anfangsmilch-pre-pronutra-von-geburt-an-p4056631001202.html", label: "dm.de", note: "4,7 ★ laut dm.de-Produktseite (zuletzt vermehrt kritische Rezensionen wegen Rezepturumstellung/Schaumbildung)." },
-        test: { status: "converted", url: "https://www.testbericht.de/produkte/aptamil-pre-anfangsmilch-800-g", label: "testbericht.de", note: "Realer Wert 68/100 („befriedigend“); die Schulnote 3,1 ist meine Umrechnung, keine Originalnote." }
+        shop: { status: "real", sources: [{ url: "https://www.dm.de/anfangsmilch-pre-pronutra-von-geburt-an-p4056631001202.html", label: "dm.de" }], note: "4,7 ★ laut dm.de-Produktseite (zuletzt vermehrt kritische Rezensionen wegen Rezepturumstellung/Schaumbildung)." },
+        test: { status: "converted", sources: [{ url: "https://www.testbericht.de/produkte/aptamil-pre-anfangsmilch-800-g", label: "testbericht.de" }], note: "Realer Wert 68/100 („befriedigend“); die Schulnote 3,1 ist meine Umrechnung, keine Originalnote." },
+        reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
     },
     {
@@ -908,7 +921,15 @@
       photo: "https://logo.clearbit.com/holle.ch?size=200",
       prov: {
         shop: { status: "est", note: "Keine konkrete Shop-Sterne-Zahl gefunden – eigene Einschätzung." },
-        test: { status: "real", url: "https://www.holle.ch/ueber-uns/aktuelles/bio-anfangsmilch-pre-in-stiftung-warentest/", label: "holle.ch (Stiftung Warentest)", note: "Stiftung Warentest: „gut“ (2,5)." }
+        test: {
+          status: "real",
+          sources: [
+            { url: "https://www.test.de/Pre-Nahrung-im-Test-5032864-detail/330000036740!11/", label: "test.de" },
+            { url: "https://www.holle.ch/ueber-uns/aktuelles/bio-anfangsmilch-pre-in-stiftung-warentest/", label: "holle.ch" }
+          ],
+          note: "Stiftung Warentest: „gut“ (2,5)."
+        },
+        reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
     },
     {
@@ -925,7 +946,8 @@
       photo: "https://logo.clearbit.com/dm.de?size=200",
       prov: {
         shop: { status: "est", note: "Keine konkrete Shop-Sterne-Zahl gefunden – eigene Einschätzung." },
-        test: { status: "converted", url: "https://www.testbericht.de/produkte/dm-babylove-anfangsmilch-pre", label: "testbericht.de", note: "Realer Wert 82/100 („gut“); die Schulnote 2,3 ist meine Umrechnung, keine Originalnote." }
+        test: { status: "converted", sources: [{ url: "https://www.testbericht.de/produkte/dm-babylove-anfangsmilch-pre", label: "testbericht.de" }], note: "Realer Wert 82/100 („gut“); die Schulnote 2,3 ist meine Umrechnung, keine Originalnote." },
+        reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
     },
     {
@@ -941,8 +963,9 @@
       url: "https://geizhals.de/bebivita-pre-anfangsmilch-pulver-a1468674.html",
       photo: "https://logo.clearbit.com/bebivita.de?size=200",
       prov: {
-        shop: { status: "converted", url: "https://www.amazon.de/Bebivita-Anfangsmilch-5er-Pack-500/product-reviews/B01N53KDGZ", label: "Amazon.de", note: "Werte je Gebinde widersprüchlich (z. B. 2,8 ★ bei 3.077 Rezensionen vs. 4,7 ★ bei 458); 4,15 ist mein gemittelter Schätzwert, keine Originalzahl." },
-        test: { status: "real", url: "https://www.testberichte.de/p/bebivita-tests/anfangsmilch-pre-testbericht.html", label: "testberichte.de", note: "Aggregierte Note 1,9 (gut)." }
+        shop: { status: "converted", sources: [{ url: "https://www.amazon.de/Bebivita-Anfangsmilch-5er-Pack-500/product-reviews/B01N53KDGZ", label: "Amazon.de" }], note: "Werte je Gebinde widersprüchlich (z. B. 2,8 ★ bei 3.077 Rezensionen vs. 4,7 ★ bei 458); 4,15 ist mein gemittelter Schätzwert, keine Originalzahl." },
+        test: { status: "real", sources: [{ url: "https://www.testberichte.de/p/bebivita-tests/anfangsmilch-pre-testbericht.html", label: "testberichte.de" }], note: "Aggregierte Note 1,9 (gut)." },
+        reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
     },
     {
@@ -959,7 +982,15 @@
       photo: "https://logo.clearbit.com/rossmann.de?size=200",
       prov: {
         shop: { status: "est", note: "Keine konkrete Shop-Sterne-Zahl gefunden – eigene Einschätzung." },
-        test: { status: "real", url: "https://www.test.de/Pre-Nahrung-im-Test-5032864-detail/330000036740!18/", label: "test.de (Stiftung Warentest)", note: "Stiftung Warentest: „gut“ (2,3), Platz 6 von 19 getesteten Produkten." }
+        test: {
+          status: "real",
+          sources: [
+            { url: "https://www.test.de/Pre-Nahrung-im-Test-5032864-detail/330000036740!18/", label: "test.de" },
+            { url: "https://www.rossmann.de/unternehmen/presse/babydream-anfangsmilch-pre.html", label: "rossmann.de (Öko-Test)" }
+          ],
+          note: "Stiftung Warentest: „gut“ (2,3), Platz 6 von 19 getesteten Produkten; zusätzlich Öko-Test-Detailwerte (u. a. Schadstoffe 3,0) laut Rossmann-Pressemitteilung."
+        },
+        reviews: { status: "est", note: "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung." }
       }
     }
   ];
@@ -1186,11 +1217,12 @@
   function provCellHtml(entry, displayValue) {
     const isEst = entry.status === "est";
     const valSpan = `<span class="val">${displayValue}</span>`;
-    const link = entry.url
-      ? `<a class="src-link" href="${entry.url}" target="_blank" rel="noopener noreferrer nofollow">${entry.label} ↗</a>`
-      : "";
+    const sources = entry.sources || [];
+    const links = sources
+      .map(s => `<a class="src-link" href="${s.url}" target="_blank" rel="noopener noreferrer nofollow">${s.label} ↗</a>`)
+      .join(" ");
     const note = entry.note ? `<span class="note">${entry.note}</span>` : "";
-    return `<td class="${isEst ? "cell-est" : ""}">${valSpan}${statusChip(entry.status)}${link}${note}</td>`;
+    return `<td class="${isEst ? "cell-est" : ""}">${valSpan}${statusChip(entry.status)}${links}${note}</td>`;
   }
 
   function renderDataTable() {
@@ -1199,10 +1231,7 @@
     const rows = products.map(p => {
       const shopCell = provCellHtml(p.prov.shop, `${p.shopRating.toFixed(2)} ★`);
       const testCell = provCellHtml(p.prov.test, p.testLabel);
-      const reviewsNote = p.name === "Nestlé Beba Pre"
-        ? "Basis: 89 reale Bewertungen (dm.de), hier vereinfacht in eine Kategorie von 1–10 übersetzt."
-        : "Keine gezählte Zahl vorhanden – reine Einschätzung zur Größenordnung.";
-      const reviewsCell = `<td class="cell-est"><span class="val">${p.reviewsTier}/10</span>${statusChip("est")}<span class="note">${reviewsNote}</span></td>`;
+      const reviewsCell = provCellHtml(p.prov.reviews, `${p.reviewsTier}/10`);
       return `<tr>
         <td class="product-cell">#${p.rank} ${p.name}</td>
         ${shopCell}
