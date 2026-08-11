@@ -9,31 +9,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&family=Nunito:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f3ee;
-    --fg: #1f2420;
-    --muted: #6b6f64;
-    --border: #dcd5c6;
-    --card-bg: #fffdf8;
-    --accent: #2f5233;
-    --accent-fg: #f5f3ee;
-    --chip-bg: #ece7d9;
+    --bg: #faf0d7;
+    --fg: #262015;
+    --muted: #756c53;
+    --border: #e7dab3;
+    --card-bg: #fffbef;
+    --accent: #ad2565;
+    --accent-fg: #fff3f8;
+    --chip-bg: #f4e6c2;
     --gold: #b8862c;
     --silver: #7c8079;
     --bronze: #a15c33;
-    --inset-shadow: inset 0 1px 2px rgba(31, 36, 32, 0.06);
-    --tile-shadow: 0 1px 2px rgba(20, 20, 15, 0.08), 0 14px 30px -14px rgba(20, 20, 15, 0.35);
-    --tile-shadow-hover: 0 2px 4px rgba(20, 20, 15, 0.1), 0 20px 38px -14px rgba(20, 20, 15, 0.42);
+    --inset-shadow: inset 0 1px 2px rgba(38, 32, 21, 0.07);
+    --tile-shadow: 0 1px 2px rgba(30, 22, 10, 0.08), 0 14px 30px -14px rgba(30, 22, 10, 0.35);
+    --tile-shadow-hover: 0 2px 4px rgba(30, 22, 10, 0.1), 0 20px 38px -14px rgba(30, 22, 10, 0.42);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #141713;
+      --bg: #171113;
       --fg: #ecebe4;
-      --muted: #999c8e;
-      --border: #2b2f27;
-      --card-bg: #1b1e19;
-      --accent: #7ab97e;
-      --accent-fg: #10140f;
-      --chip-bg: #21241d;
+      --muted: #a3968f;
+      --border: #2f2426;
+      --card-bg: #1e1618;
+      --accent: #f193c1;
+      --accent-fg: #2a0f1c;
+      --chip-bg: #241a1d;
       --gold: #e0b04b;
       --silver: #a7ab9f;
       --bronze: #c9814f;
@@ -43,16 +43,16 @@
     }
   }
   :root[data-theme="light"] {
-    --bg: #f5f3ee; --fg: #1f2420; --muted: #6b6f64; --border: #dcd5c6;
-    --card-bg: #fffdf8; --accent: #2f5233; --accent-fg: #f5f3ee; --chip-bg: #ece7d9;
+    --bg: #faf0d7; --fg: #262015; --muted: #756c53; --border: #e7dab3;
+    --card-bg: #fffbef; --accent: #ad2565; --accent-fg: #fff3f8; --chip-bg: #f4e6c2;
     --gold: #b8862c; --silver: #7c8079; --bronze: #a15c33;
-    --inset-shadow: inset 0 1px 2px rgba(31, 36, 32, 0.06);
-    --tile-shadow: 0 1px 2px rgba(20, 20, 15, 0.08), 0 14px 30px -14px rgba(20, 20, 15, 0.35);
-    --tile-shadow-hover: 0 2px 4px rgba(20, 20, 15, 0.1), 0 20px 38px -14px rgba(20, 20, 15, 0.42);
+    --inset-shadow: inset 0 1px 2px rgba(38, 32, 21, 0.07);
+    --tile-shadow: 0 1px 2px rgba(30, 22, 10, 0.08), 0 14px 30px -14px rgba(30, 22, 10, 0.35);
+    --tile-shadow-hover: 0 2px 4px rgba(30, 22, 10, 0.1), 0 20px 38px -14px rgba(30, 22, 10, 0.42);
   }
   :root[data-theme="dark"] {
-    --bg: #141713; --fg: #ecebe4; --muted: #999c8e; --border: #2b2f27;
-    --card-bg: #1b1e19; --accent: #7ab97e; --accent-fg: #10140f; --chip-bg: #21241d;
+    --bg: #171113; --fg: #ecebe4; --muted: #a3968f; --border: #2f2426;
+    --card-bg: #1e1618; --accent: #f193c1; --accent-fg: #2a0f1c; --chip-bg: #241a1d;
     --gold: #e0b04b; --silver: #a7ab9f; --bronze: #c9814f;
     --inset-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
     --tile-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 14px 30px -12px rgba(0, 0, 0, 0.6);
@@ -98,6 +98,9 @@
     margin: 18px auto 4px;
     padding: 18px 0 6px;
   }
+  @media (min-width: 860px) {
+    .hero-banner { max-width: 920px; }
+  }
   .hero-banner .bubbles-layer {
     position: absolute;
     inset: 0;
@@ -112,16 +115,14 @@
     width: var(--s);
     height: var(--s);
     border-radius: 50%;
-    background:
-      radial-gradient(circle at 30% 26%, #ffffff 0%, color-mix(in srgb, var(--accent) 16%, white) 45%, color-mix(in srgb, var(--accent) 42%, white) 100%);
+    background: color-mix(in srgb, var(--accent) 20%, var(--card-bg) 80%);
+    border: 1.5px solid color-mix(in srgb, #ffffff 75%, var(--accent) 25%);
     box-shadow:
-      inset 0 0 10px rgba(255,255,255,0.65),
-      inset -5px -5px 9px color-mix(in srgb, var(--accent) 30%, transparent),
-      0 6px 16px -6px rgba(20,20,15,0.3);
+      inset 1.5px 2px 0 0 rgba(255, 255, 255, 0.55),
+      0 6px 14px -6px rgba(20, 20, 15, 0.3);
     opacity: var(--o, 0.85);
     will-change: transform;
   }
-  .hero-banner .bubbles-layer.behind .bubble { filter: blur(0.5px); }
   .hero-image {
     display: block;
     margin: 0 auto;
@@ -140,9 +141,10 @@
   }
   header.masthead h1 {
     font-family: var(--font-display);
-    font-size: 2.15rem;
+    font-size: clamp(2.6rem, 4.5vw + 1.3rem, 4.4rem);
     font-weight: 700;
     letter-spacing: -0.01em;
+    line-height: 1.05;
     margin: 0 0 10px;
     text-wrap: balance;
   }
@@ -163,7 +165,7 @@
   }
   .method h2 {
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: clamp(1.4rem, 1vw + 1.2rem, 1.75rem);
     font-weight: 700;
     margin: 0 0 6px;
   }
@@ -184,7 +186,7 @@
   }
   .weight-item .pct {
     font-family: var(--font-display);
-    font-size: 1.35rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: var(--accent);
     line-height: 1;
@@ -288,6 +290,73 @@
 
   main { padding: 22px 0 44px; }
 
+  .winner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 34px 24px 28px;
+    box-shadow: var(--tile-shadow);
+    margin-bottom: 26px;
+  }
+  @media (min-width: 720px) {
+    .winner {
+      flex-direction: row;
+      align-items: center;
+      padding: 20px 44px;
+      gap: 40px;
+    }
+  }
+  .winner-ribbon {
+    position: absolute;
+    top: -16px;
+    left: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.84rem;
+    padding: 8px 16px;
+    border-radius: 999px;
+    box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.4);
+  }
+  .winner-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 10px 0 0;
+  }
+  .winner-media .product-photo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 24px;
+    background: #fff;
+    padding: 14px;
+    box-shadow: var(--inset-shadow);
+  }
+  .winner-media svg { width: 150px; height: 150px; display: block; }
+  .winner-media .media-fallback { display: none; align-items: center; justify-content: center; }
+  .winner-body { flex: 1 1 auto; min-width: 0; }
+  .winner-body h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 1.6vw + 1.4rem, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    text-wrap: balance;
+  }
+  .winner-body .score-row .num { font-size: 2.6rem; }
+  .winner-body .breakdown { max-width: 420px; }
+  .winner-body .cta { display: inline-block; width: auto; padding: 12px 30px; }
+
   #count {
     color: var(--muted);
     font-size: 0.85rem;
@@ -383,7 +452,7 @@
 
   .card h2 {
     font-family: var(--font-display);
-    font-size: 1.28rem;
+    font-size: 1.55rem;
     font-weight: 700;
     letter-spacing: -0.01em;
     margin: 0 0 4px;
@@ -552,6 +621,7 @@
   </div>
 
   <main>
+    <div id="winner"></div>
     <p id="count"></p>
     <div class="grid" id="grid"></div>
     <div class="empty" id="empty">Keine Treffer für diese Suche.</div>
@@ -800,6 +870,52 @@
     return el;
   }
 
+  function renderWinner() {
+    const winnerEl = document.getElementById("winner");
+    if (!winnerEl) return;
+    const p = products[0];
+    winnerEl.innerHTML = `
+      <div class="winner">
+        <div class="winner-ribbon">🏆 Testsieger ${p.score.toFixed(1)} / 100</div>
+        <div class="winner-media">
+          <img class="product-photo" src="${p.photo}" alt="${p.name} Markenbild" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="media-fallback">${tinSvg(p)}</div>
+        </div>
+        <div class="winner-body">
+          <div class="card-top">
+            <p class="eyebrow">${p.category}</p>
+            <p class="price-tag">${p.price}</p>
+          </div>
+          <h2>${p.name}</h2>
+          <p class="maker">Hersteller: ${p.maker}</p>
+          <p class="desc">${p.desc}</p>
+          <div class="score-row">
+            <span class="num">${p.score.toFixed(1)}</span>
+            <span class="of">/ 100 Punkte</span>
+          </div>
+          <div class="breakdown">
+            <div class="bd-row">
+              <span class="bd-label">Shop-Bewertung</span>
+              <span class="bd-track"><span class="bd-fill" style="width:${(p.shopRating/5*100).toFixed(0)}%"></span></span>
+              <span class="bd-val">${p.shopRating.toFixed(2)}★</span>
+            </div>
+            <div class="bd-row">
+              <span class="bd-label">Testurteil</span>
+              <span class="bd-track"><span class="bd-fill" style="width:${((6-p.testGrade)/5*100).toFixed(0)}%"></span></span>
+              <span class="bd-val">${p.testGrade.toFixed(1)}</span>
+            </div>
+            <div class="bd-row">
+              <span class="bd-label">Bewertungsmenge</span>
+              <span class="bd-track"><span class="bd-fill" style="width:${(p.reviewsTier/10*100).toFixed(0)}%"></span></span>
+              <span class="bd-val">${p.reviewsTier}/10</span>
+            </div>
+          </div>
+          <p class="fact-line"><strong>${p.testLabel}</strong> · ${p.reviewsLabel}</p>
+          <a class="cta" href="${p.url}" target="_blank" rel="noopener noreferrer nofollow">Preise &amp; Angebote ansehen →</a>
+        </div>
+      </div>`;
+  }
+
   function renderGrid() {
     const q = searchEl.value.trim().toLowerCase();
     let filtered = products.filter(p => {
@@ -838,6 +954,7 @@
   sortEl.addEventListener("change", renderGrid);
 
   renderTabs();
+  renderWinner();
   renderGrid();
 
   (function initParallax() {
