@@ -610,6 +610,124 @@
   .legend li { display: flex; align-items: center; gap: 7px; list-style: none; }
   .legend { padding: 0; margin-left: 0; }
 
+  .rating-chart-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0 40px;
+  }
+  .rating-chart {
+    position: relative;
+    width: min(480px, 92vw);
+    flex-shrink: 0;
+  }
+  .rating-chart-ring {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+  .rating-chart-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 56%;
+    height: 56%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    overflow: visible;
+  }
+  .rating-chart-svg .seg-track {
+    fill: none;
+    stroke: var(--chip-bg);
+    stroke-width: 26;
+  }
+  .rating-chart-svg .seg {
+    fill: none;
+    stroke-width: 26;
+    stroke-linecap: round;
+    cursor: pointer;
+    transition: stroke-width 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+  }
+  .rating-chart-svg .seg.is-active {
+    stroke-width: 32;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+  }
+  .rating-chart-svg .seg.is-dim { opacity: 0.32; }
+
+  .rating-chart-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+  }
+  .rating-chart-center .big {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 1.4vw + 1.1rem, 2rem);
+    line-height: 1;
+  }
+  .rating-chart-center .small {
+    font-size: 0.74rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .rating-chart-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 14px 7px 10px;
+    box-shadow: var(--tile-shadow);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+  }
+  .rating-chart-label:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .rating-chart-label .dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .rating-chart-label .txt { display: flex; flex-direction: column; line-height: 1.25; }
+  .rating-chart-label .txt strong { font-size: 0.78rem; font-weight: 700; }
+  .rating-chart-label .txt small { font-size: 0.68rem; color: var(--muted); font-weight: 600; }
+  .rating-chart-label.is-active {
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: var(--tile-shadow-hover);
+  }
+  .rating-chart-label.is-dim { opacity: 0.45; }
+
+  @media (max-width: 640px) {
+    .rating-chart-wrap { padding-bottom: 20px; }
+    .rating-chart { width: 210px; margin: 0 auto; }
+    .rating-chart-labels {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .rating-chart-label {
+      position: static;
+      top: auto;
+      left: auto;
+      transform: none;
+      width: fit-content;
+    }
+    .rating-chart-label.is-active { transform: scale(1.04); }
+  }
+
   .status-chip {
     display: inline-flex;
     align-items: center;
@@ -768,6 +886,25 @@
         <li><span class="status-chip converted">Umgerechnet</span> reale Quelle, aber selbst in Sterne/Schulnote übertragen</li>
         <li><span class="status-chip est">Geschätzt</span> keine konkrete Quelle gefunden, eigene Einschätzung</li>
       </ul>
+
+      <div class="rating-chart-wrap">
+        <div class="rating-chart" id="ratingChart">
+          <div class="rating-chart-ring">
+            <svg class="rating-chart-svg" viewBox="0 0 220 220" aria-hidden="true">
+              <circle class="seg-track" cx="110" cy="110" r="84"></circle>
+              <circle class="seg" data-seg="0" cx="110" cy="110" r="84"></circle>
+              <circle class="seg" data-seg="1" cx="110" cy="110" r="84"></circle>
+              <circle class="seg" data-seg="2" cx="110" cy="110" r="84"></circle>
+            </svg>
+            <div class="rating-chart-center">
+              <span class="big">100&nbsp;%</span>
+              <span class="small">Gesamtscore</span>
+            </div>
+          </div>
+          <div class="rating-chart-labels" id="ratingChartLabels"></div>
+        </div>
+      </div>
+
       <div class="table-scroll">
         <table class="data-table" id="dataTable">
           <thead>
@@ -1248,6 +1385,100 @@
   renderTabs();
   renderGrid();
   renderDataTable();
+
+  (function initRatingChart() {
+    const chart = document.getElementById("ratingChart");
+    const labelsWrap = document.getElementById("ratingChartLabels");
+    if (!chart || !labelsWrap) return;
+
+    const weights = [
+      { pct: 60, label: "Shop-Kundenbewertung", sub: "Ø Sterne aus mehreren Online-Shops", color: "var(--accent)" },
+      { pct: 30, label: "Unabhängiges Testurteil", sub: "Stiftung Warentest / Öko-Test Schulnote", color: "var(--gold)" },
+      { pct: 10, label: "Bewertungsvolumen", sub: "Verlässlichkeit durch Bewertungsanzahl", color: "var(--silver)" }
+    ];
+
+    const segEls = Array.from(chart.querySelectorAll(".seg"));
+    const r = 84;
+    const C = 2 * Math.PI * r;
+    const gap = 6;
+    const svgEl = chart.querySelector(".rating-chart-svg");
+
+    labelsWrap.innerHTML = "";
+    const labelEls = [];
+    const angles = [];
+    let cursor = 0;
+
+    weights.forEach((w, i) => {
+      const frac = w.pct / 100;
+      const rawLen = frac * C;
+      const len = Math.max(rawLen - gap, 2);
+      const seg = segEls[i];
+      seg.style.stroke = w.color;
+      seg.setAttribute("stroke-dasharray", `${len} ${C - len}`);
+      seg.setAttribute("stroke-dashoffset", `${-(cursor * C)}`);
+      seg.dataset.seg = String(i);
+
+      const midFrac = cursor + frac / 2;
+      const angleRad = (midFrac * 360 - 90) * (Math.PI / 180);
+      angles.push(angleRad);
+
+      const label = document.createElement("div");
+      label.className = "rating-chart-label";
+      label.dataset.seg = String(i);
+      label.tabIndex = 0;
+      label.innerHTML = `<span class="dot" style="background:${w.color}"></span><span class="txt"><strong>${w.pct} % ${w.label}</strong><small>${w.sub}</small></span>`;
+      // position set later in positionLabels()
+      labelsWrap.appendChild(label);
+      labelEls.push(label);
+
+      cursor += frac;
+    });
+
+    function positionLabels() {
+      if (window.innerWidth <= 640) {
+        labelEls.forEach(l => { l.style.left = ""; l.style.top = ""; });
+        return;
+      }
+      const chartRect = chart.getBoundingClientRect();
+      const svgRect = svgEl.getBoundingClientRect();
+      const cx = (svgRect.left - chartRect.left) + svgRect.width / 2;
+      const cy = (svgRect.top - chartRect.top) + svgRect.height / 2;
+      const ringOuterR = (svgRect.width / 2) * ((r + 13) / 110);
+      const labelR = ringOuterR + 58;
+      labelEls.forEach((l, i) => {
+        l.style.left = (cx + Math.cos(angles[i]) * labelR) + "px";
+        l.style.top = (cy + Math.sin(angles[i]) * labelR) + "px";
+      });
+    }
+    positionLabels();
+    let ratingResizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(ratingResizeTimer);
+      ratingResizeTimer = setTimeout(positionLabels, 120);
+    });
+
+    function setActive(i) {
+      segEls.forEach(s => {
+        const active = i === null || s.dataset.seg === String(i);
+        s.classList.toggle("is-active", i !== null && s.dataset.seg === String(i));
+        s.classList.toggle("is-dim", i !== null && !active);
+      });
+      labelEls.forEach(l => {
+        const active = i === null || l.dataset.seg === String(i);
+        l.classList.toggle("is-active", i !== null && l.dataset.seg === String(i));
+        l.classList.toggle("is-dim", i !== null && !active);
+      });
+    }
+
+    [...segEls, ...labelEls].forEach(el => {
+      const idx = el.dataset.seg;
+      el.addEventListener("mouseenter", () => setActive(idx));
+      el.addEventListener("mouseleave", () => setActive(null));
+      el.addEventListener("focus", () => setActive(idx));
+      el.addEventListener("blur", () => setActive(null));
+      el.addEventListener("touchstart", () => setActive(idx), { passive: true });
+    });
+  })();
 
   (function initParallax() {
     const banner = document.getElementById("heroBanner");
